@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Card</title>
+    <title>Random Card Selector</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Almendra&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans Display', sans-serif; 
@@ -49,21 +52,21 @@
         }
         .card-display {
             margin-top: 1.5rem; 
-            min-height: 340px; 
+            min-height: 408px; 
             padding: 0.5rem; 
-            border: 1px solid #374151; 
+            border: 1px solid transparent; 
             border-radius: 0.5rem; 
-            background-color: #1f2937; 
+            background-color: transparent; 
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden; 
         }
         .card-display svg {
-            width: 225px;  
-            height: 315px; 
+            width: 270px;  
+            height: 378px; 
         }
-        .card-display-text {
+        .card-display-text { 
             font-family: 'Noto Sans Display', sans-serif; 
             font-size: 1.25rem; 
             line-height: 1.5;
@@ -85,7 +88,9 @@
                 <option value="54_card" selected>54-Card Deck (with Jokers)</option>
                 <option value="tarot_major">Tarot Deck (Major Arcana)</option>
                 <option value="tarot_full">Tarot Deck (Major & Minor Arcana)</option>
-                </select>
+                <option value="tarot_reversals">Tarot Deck with Reversals</option>
+                <option value="thoth_tarot">Thoth Tarot</option>
+            </select>
         </div>
 
         <button id="drawCardButton" class="button w-full sm:w-auto bg-gray-700 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg border-none cursor-pointer">
@@ -93,7 +98,7 @@
         </button>
 
         <div id="cardDisplayArea" class="card-display">
-            <span class="card-display-text">Click the button to draw a card.</span>
+            <span class="card-display-text"></span> 
         </div>
     </div>
 
@@ -112,38 +117,123 @@
         };
         const playingCardRanks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']; 
         
-        const majorArcanaNames = [
-            "0 - The Fool", "I - The Magician", "II - The High Priestess", "III - The Empress", 
-            "IV - The Emperor", "V - The Hierophant", "VI - The Lovers", "VII - The Chariot", 
-            "VIII - Strength", "IX - The Hermit", "X - Wheel of Fortune", "XI - Justice", 
-            "XII - The Hanged Man", "XIII - Death", "XIV - Temperance", "XV - The Devil", 
-            "XVI - The Tower", "XVII - The Star", "XVIII - The Moon", "XIX - The Sun", 
-            "XX - Judgement", "XXI - The World"
+        const majorArcanaData = [ // Rider-Waite-Smith based
+            { name: "0 - The Fool", meaning: "Beginnings, innocence, spontaneity, a free spirit", reversedMeaning: "Recklessness, taken advantage of, inconsideration", emojis: "🚶‍♂️🎒🌅" },
+            { name: "I - The Magician", meaning: "Manifestation, willpower, skill, resourcefulness", reversedMeaning: "Trickery, illusions, out of touch", emojis: "🪄✨" },
+            { name: "II - The High Priestess", meaning: "Intuition, mystery, subconscious, secrets", reversedMeaning: "Lack of center, lost inner voice, repressed feelings", emojis: "🌙📜" },
+            { name: "III - The Empress", meaning: "Nurturing, abundance, femininity, fertility", reversedMeaning: "Dependence, smothering, emptiness, nosiness", emojis: "🌿👑" },
+            { name: "IV - The Emperor", meaning: "Authority, structure, control, father figure", reversedMeaning: "Tyranny, rigidity, coldness", emojis: "👑🐏" },
+            { name: "V - The Hierophant", meaning: "Tradition, guidance, belief, institutions", reversedMeaning: "Rebellion, subversiveness, new approaches", emojis: "🙏🗝️" },
+            { name: "VI - The Lovers", meaning: "Union, choices, relationships, harmony", reversedMeaning: "Loss of balance, one-sidedness, disharmony", emojis: "💑🔗" },
+            { name: "VII - The Chariot", meaning: "Victory, determination, willpower, control", reversedMeaning: "Lack of control, lack of direction, aggression", emojis: "🐎🏆" },
+            { name: "VIII - Strength", meaning: "Courage, inner strength, patience, compassion", reversedMeaning: "Self doubt, weakness, insecurity", emojis: "💪🦁" },
+            { name: "IX - The Hermit", meaning: "Introspection, solitude, wisdom, guidance", reversedMeaning: "Loneliness, isolation, lost your way", emojis: "🏮🧙‍♂️" },
+            { name: "X - Wheel of Fortune", meaning: "Cycles, fate, turning points, luck", reversedMeaning: "No control, clinging to control, bad luck", emojis: "☸️🔄" },
+            { name: "XI - Justice", meaning: "Fairness, truth, cause and effect, law", reversedMeaning: "Dishonesty, unaccountability, unfairness", emojis: "⚖️" },
+            { name: "XII - The Hanged Man", meaning: "Surrender, new perspective, pause, sacrifice", reversedMeaning: "Stalling, needless sacrifice, fear of sacrifice", emojis: "💡" },
+            { name: "XIII - Death", meaning: "Transformation, endings, change, new beginnings", reversedMeaning: "Fear of change, holding on, stagnation, decay", emojis: "💀🌅" },
+            { name: "XIV - Temperance", meaning: "Balance, moderation, patience, purpose", reversedMeaning: "Extremes, excess, lack of balance", emojis: "💧😇" },
+            { name: "XV - The Devil", meaning: "Bondage, addiction, materialism, temptation", reversedMeaning: "Freedom, release, restoring control", emojis: "😈⛓️" },
+            { name: "XVI - The Tower", meaning: "Sudden upheaval, revelation, crisis, liberation", reversedMeaning: "Disaster avoided, delayed disaster, fear of suffering", emojis: "🌩️💥" },
+            { name: "XVII - The Star", meaning: "Hope, inspiration, serenity, faith", reversedMeaning: "Faithlessness, discouragement, insecurity", emojis: "⭐✨" },
+            { name: "XVIII - The Moon", meaning: "Illusion, fear, subconscious, intuition", reversedMeaning: "Confusion, fear, misinterpretation", emojis: "🌕🐺" },
+            { name: "XIX - The Sun", meaning: "Joy, success, vitality, clarity", reversedMeaning: "Negativity, depression, sadness", emojis: "☀️🌻" },
+            { name: "XX - Judgement", meaning: "Rebirth, awakening, reckoning, absolution", reversedMeaning: "Lack of self awareness, doubt, self loathing", emojis: "🎺😇" },
+            { name: "XXI - The World", meaning: "Completion, integration, travel, fulfillment", reversedMeaning: "Incompletion, no closure", emojis: "🌎🌿" }
         ];
 
-        const tarotMinorSuitDetails = {
+        const thothMajorArcanaData = [
+            { name: "0 - The Fool", thothName: "The Fool", number: "0", meaning: "New beginnings, spontaneity, faith", reversedMeaning: "Recklessness, folly, lack of consideration" },
+            { name: "I - The Magus", thothName: "The Magus", number: "I", meaning: "Willpower, skill, manifestation", reversedMeaning: "Deception, manipulation, misuse of power" },
+            { name: "II - The Priestess", thothName: "The Priestess", number: "II", meaning: "Intuition, secrets, hidden knowledge", reversedMeaning: "Hidden agendas, superficiality, ignorance" },
+            { name: "III - The Empress", thothName: "The Empress", number: "III", meaning: "Nurturing, fertility, abundance", reversedMeaning: "Smothering, dependence, creative block" },
+            { name: "IV - The Emperor", thothName: "The Emperor", number: "IV", meaning: "Authority, structure, control", reversedMeaning: "Domination, rigidity, misuse of power" },
+            { name: "V - The Hierophant", thothName: "The Hierophant", number: "V", meaning: "Tradition, convention, guidance", reversedMeaning: "Rebellion, non-conformity, new approaches" },
+            { name: "VI - The Lovers", thothName: "The Lovers", number: "VI", meaning: "Union, choices, relationships", reversedMeaning: "Disharmony, indecision, conflict" },
+            { name: "VII - The Chariot", thothName: "The Chariot", number: "VII", meaning: "Victory, willpower, control", reversedMeaning: "Lack of direction, aggression, defeat" },
+            { name: "VIII - Adjustment", thothName: "Adjustment", number: "VIII", meaning: "Balance, fairness, truth, karma", reversedMeaning: "Injustice, imbalance, dishonesty" }, 
+            { name: "IX - The Hermit", thothName: "The Hermit", number: "IX", meaning: "Introspection, wisdom, solitude", reversedMeaning: "Isolation, loneliness, withdrawal" },
+            { name: "X - Fortune", thothName: "Fortune", number: "X", meaning: "Cycles, destiny, turning points", reversedMeaning: "Bad luck, resistance to change, upheaval" },
+            { name: "XI - Lust", thothName: "Lust", number: "XI", meaning: "Passion, courage, inner strength", reversedMeaning: "Weakness, self-doubt, lack of control" }, 
+            { name: "XII - The Hanged Man", thothName: "The Hanged Man", number: "XII", meaning: "New perspective, surrender, sacrifice", reversedMeaning: "Stagnation, martyrdom, indecision" },
+            { name: "XIII - Death", thothName: "Death", number: "XIII", meaning: "Transformation, endings, new beginnings", reversedMeaning: "Resistance to change, stagnation" },
+            { name: "XIV - Art", thothName: "Art", number: "XIV", meaning: "Integration, balance, alchemy", reversedMeaning: "Imbalance, lack of harmony, extremes" }, 
+            { name: "XV - The Devil", thothName: "The Devil", number: "XV", meaning: "Bondage, materialism, temptation", reversedMeaning: "Freedom, release, breaking free" },
+            { name: "XVI - The Tower", thothName: "The Tower", number: "XVI", meaning: "Sudden upheaval, revelation, crisis", reversedMeaning: "Avoiding disaster, fear of change" },
+            { name: "XVII - The Star", thothName: "The Star", number: "XVII", meaning: "Hope, inspiration, serenity", reversedMeaning: "Despair, discouragement, insecurity" },
+            { name: "XVIII - The Moon", thothName: "The Moon", number: "XVIII", meaning: "Illusion, fear, subconscious", reversedMeaning: "Clarity, overcoming fear, confusion" },
+            { name: "XIX - The Sun", thothName: "The Sun", number: "XIX", meaning: "Joy, success, vitality", reversedMeaning: "Lack of success, pessimism, sadness" },
+            { name: "XX - The Aeon", thothName: "The Aeon", number: "XX", meaning: "Awakening, new era, judgment", reversedMeaning: "Lack of self-awareness, stagnation" }, 
+            { name: "XXI - The Universe", thothName: "The Universe", number: "XXI", meaning: "Completion, wholeness, integration", reversedMeaning: "Incompletion, lack of closure, limitation" } 
+        ];
+
+
+        const tarotMinorSuitDetails = { // RWS-based
             "Wands 🪄": { name: "Wands", emoji: "🪄", color: "#D2691E" }, 
             "Cups 🏆": { name: "Cups", emoji: "🏆", color: "#4169E1" },   
             "Swords ⚔️": { name: "Swords", emoji: "⚔️", color: "#708090" }, 
             "Pentacles 🪙": { name: "Pentacles", emoji: "🪙", color: "#B8860B" } 
         };
-        const tarotRanks = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Page", "Knight", "Queen", "King"];
+        const thothTarotMinorSuitDetails = { // Thoth specific
+            "Wands": { name: "Wands", emoji: "🔥", color: "#D2691E" }, 
+            "Cups": { name: "Cups", emoji: "💧", color: "#4169E1" },   
+            "Swords": { name: "Swords", emoji: "💨", color: "#708090" }, 
+            "Disks": { name: "Disks", emoji: "🌍", color: "#B8860B" }  
+        };
+
+        const tarotRanks = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Page", "Knight", "Queen", "King"]; 
+        const thothTarotRanks = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Princess", "Prince", "Queen", "Knight"]; 
         
+        const minorArcanaMeanings = { /* ... RWS meanings ... */ }; // Placeholder, assuming these are populated elsewhere if needed
+        const minorArcanaReversedMeanings = { /* ... RWS reversed meanings ... */ }; // Placeholder
+        
+        const thothMinorArcanaSubtitles = {
+            "Ace of Wands": "The Root of the Powers of Fire", "Two of Wands": "Dominion", "Three of Wands": "Virtue", "Four of Wands": "Completion", "Five of Wands": "Strife", "Six of Wands": "Victory", "Seven of Wands": "Valour", "Eight of Wands": "Swiftness", "Nine of Wands": "Strength", "Ten of Wands": "Oppression",
+            "Ace of Cups": "The Root of the Powers of Water", "Two of Cups": "Love", "Three of Cups": "Abundance", "Four of Cups": "Luxury", "Five of Cups": "Disappointment", "Six of Cups": "Pleasure", "Seven of Cups": "Debauch", "Eight of Cups": "Indolence", "Nine of Cups": "Happiness", "Ten of Cups": "Satiety",
+            "Ace of Swords": "The Root of the Powers of Air", "Two of Swords": "Peace", "Three of Swords": "Sorrow", "Four of Swords": "Truce", "Five of Swords": "Defeat", "Six of Swords": "Science", "Seven of Swords": "Futility", "Eight of Swords": "Interference", "Nine of Swords": "Cruelty", "Ten of Swords": "Ruin",
+            "Ace of Disks": "The Root of the Powers of Earth", "Two of Disks": "Change", "Three of Disks": "Works", "Four of Disks": "Power", "Five of Disks": "Worry", "Six of Disks": "Success", "Seven of Disks": "Failure", "Eight of Disks": "Prudence", "Nine of Disks": "Gain", "Ten of Disks": "Wealth"
+        };
+        const thothMinorArcanaMeanings = { 
+            "Ace of Wands": "Primal energy, new initiative", "Two of Wands": "Taking charge, bold action", "Three of Wands": "Established strength, integrity", "Four of Wands": "Perfected work, celebration",
+            "Five of Wands": "Contest, struggle for dominance", "Six of Wands": "Triumph, success after effort", "Seven of Wands": "Courage against odds, bravery", "Eight of Wands": "Rapid progress, quick messages",
+            "Nine of Wands": "Great power, inner fortitude", "Ten of Wands": "Heavy burden, excessive pressure", 
+            "Princess of Wands": "Brilliance, courage, beauty", "Prince of Wands": "Swiftness, suddenness, impulsiveness", "Queen of Wands": "Authority, steady force", "Knight of Wands": "Fiery, active, impetuous power",
+            "Ace of Cups": "Emotional beginnings, receptivity", "Two of Cups": "Harmonious partnership, affection", "Three of Cups": "Joyful celebration, plenty", "Four of Cups": "Excessive pleasure, weariness",
+            "Five of Cups": "Emotional letdown, loss", "Six of Cups": "Joyful experience, delight", "Seven of Cups": "Illusionary success, corruption", "Eight of Cups": "Abandoned success, apathy",
+            "Nine of Cups": "Complete satisfaction, well-being", "Ten of Cups": "Lasting happiness, fulfillment",
+            "Princess of Cups": "Sweetness, beauty, gentleness", "Prince of Cups": "Subtlety, craft, passion", "Queen of Cups": "Receptivity, reflection", "Knight of Cups": "Grace, passive power",
+            "Ace of Swords": "Invoked power, mental breakthrough", "Two of Swords": "Balanced force, indecision resolved", "Three of Swords": "Unhappiness, inner conflict", "Four of Swords": "Rest from strife, respite",
+            "Five of Swords": "Loss, humiliation, infamy", "Six of Swords": "Earned success, intellectual journey", "Seven of Swords": "Unstable effort, partial success", "Eight of Swords": "Shortened force, restriction",
+            "Nine of Swords": "Despair, self-doubt, suffering", "Ten of Swords": "Destruction of mind, ruin",
+            "Princess of Swords": "Practicality, aggression", "Prince of Swords": "Intellect, skill in action", "Queen of Swords": "Clear perception, independence", "Knight of Swords": "Authoritative, logical power",
+            "Ace of Disks": "Root of Earth, material potential", "Two of Disks": "Harmonious movement, adaptation", "Three of Disks": "Material skill, collaboration", "Four of Disks": "Earthly control, stability",
+            "Five of Disks": "Material trouble, anxiety", "Six of Disks": "Material gain, generosity", "Seven of Disks": "Unfulfilled success, patience needed", "Eight of Disks": "Skill in material affairs, caution",
+            "Nine of Disks": "Material happiness, inheritance", "Ten of Disks": "Prosperity, lasting wealth",
+            "Princess of Disks": "Generative force, new growth", "Prince of Disks": "Solid practical force, endurance", "Queen of Disks": "Nurturing, groundedness", "Knight of Disks": "Productive, reliable power"
+        };
+        const thothMinorArcanaReversedMeanings = { /* Thoth reversals are not used in this deck configuration */ };
+
+
         let currentDeck = [];
 
         // --- SVG Generation Constants ---
-        const cardWidth = 225; 
-        const cardHeight = 315; 
-        const cornerRadius = 18; 
+        const cardWidth = 270; 
+        const cardHeight = 378; 
+        const cornerRadius = 22; 
         
-        const rankFontSize = 48; 
-        const suitFontSize = 36; 
-        const centerSuitFontSize = 68; 
-        const majorArcanaNameFontSize = 36; 
-        const majorArcanaNumberFontSize = 30; 
-        const cornerXOffset = 30; 
+        const rankFontSize = 58; 
+        const suitFontSize = 34; 
+        const centerSuitFontSize = 82; 
+        const majorArcanaTitleFontSize = 30; 
+        const majorArcanaNumberFontSize = 52; 
+        const majorArcanaEmojiFontSize = 22; 
+        const minorArcanaCardNameFontSize = 29; 
+        const thothSubtitleFontSize = 22; // Font size for Thoth Minor Arcana subtitles
+        const meaningFontSize = 16; 
+        const reversedTextFontSize = 18; 
+        const cornerXOffset = 36; 
         const cardFontFamily = "'IM Fell English', serif"; 
-        const cardStrokeWidth = 2; 
+        const cardStrokeWidth = 2.5; 
         const playingCardFill = "#FAF9F6"; 
         const tarotCardFill = "#D2B48C"; 
         const tarotTextColor = "#111827"; 
@@ -154,65 +244,137 @@
             const suitInfo = playingCardSuits[suitName];
             if (!suitInfo) return `<span>Error: Suit ${suitName} not found</span>`;
             let displayRank = rank; 
-            const yRankTop = rankFontSize + 6; 
-            const ySuitTop = yRankTop + suitFontSize + 8; 
+            const yRankTop = rankFontSize + 7; 
+            const playingCardCornerSuitSize = 43; 
+            const ySuitTop = yRankTop + playingCardCornerSuitSize + 10; 
+
             return `
                 <svg width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family: ${cardFontFamily};">
                     <defs>
-                        <pattern id="linenPatternPlaying" patternUnits="userSpaceOnUse" width="6" height="6">
-                            <rect width="6" height="6" fill="${playingCardFill}"/>
-                            <line x1="0" y1="0" x2="6" y2="6" stroke="${playingCardLinenLineColor}" stroke-width="0.75"/>
-                            <line x1="6" y1="0" x2="0" y2="6" stroke="${playingCardLinenLineColor}" stroke-width="0.75"/>
+                        <pattern id="linenPatternPlaying" patternUnits="userSpaceOnUse" width="7" height="7"> 
+                            <rect width="7" height="7" fill="${playingCardFill}"/>
+                            <line x1="0" y1="0" x2="7" y2="7" stroke="${playingCardLinenLineColor}" stroke-width="0.9"/>
+                            <line x1="7" y1="0" x2="0" y2="7" stroke="${playingCardLinenLineColor}" stroke-width="0.9"/>
                         </pattern>
                     </defs>
                     <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}" fill="url(#linenPatternPlaying)" stroke="#94a3b8" stroke-width="${cardStrokeWidth}"/>
                     <text x="${cornerXOffset}" y="${yRankTop}" font-size="${rankFontSize}" fill="${suitInfo.color}" text-anchor="middle">${displayRank}</text>
-                    <text x="${cornerXOffset}" y="${ySuitTop}" font-size="${suitFontSize}" fill="${suitInfo.color}" text-anchor="middle">${suitInfo.symbol}</text>
-                    <text x="${cardWidth/2}" y="${cardHeight/2 + centerSuitFontSize/3}" font-size="${centerSuitFontSize}" fill="${suitInfo.color}" text-anchor="middle">${suitInfo.symbol}</text>
+                    <text x="${cornerXOffset}" y="${ySuitTop}" font-size="${playingCardCornerSuitSize}" fill="${suitInfo.color}" text-anchor="middle">${suitInfo.symbol}</text>
+                    <text x="${cardWidth/2}" y="${cardHeight/2 + centerSuitFontSize/3}" font-size="${centerSuitFontSize}" fill="${suitInfo.color}" text-anchor="middle" dominant-baseline="central">${suitInfo.symbol}</text>
                 </svg>`;
         }
 
         function generateJokerSVG() {
-            const jokerTextSize = 50; 
-            const jokerEmojiSize = 68; 
-            const yJokerText = cardHeight/2 - 25; 
-            const yJokerEmoji = cardHeight/2 + 50; 
+            const jokerTextSize = 60; 
+            const jokerEmojiSize = 82; 
+            const yJokerText = cardHeight/2 - 30; 
+            const yJokerEmoji = cardHeight/2 + 60; 
             return `
                 <svg width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family: ${cardFontFamily};">
                      <defs>
-                        <pattern id="linenPatternJoker" patternUnits="userSpaceOnUse" width="6" height="6">
-                            <rect width="6" height="6" fill="${playingCardFill}"/>
-                            <line x1="0" y1="0" x2="6" y2="6" stroke="${playingCardLinenLineColor}" stroke-width="0.75"/>
-                            <line x1="6" y1="0" x2="0" y2="6" stroke="${playingCardLinenLineColor}" stroke-width="0.75"/>
+                        <pattern id="linenPatternJoker" patternUnits="userSpaceOnUse" width="7" height="7">
+                            <rect width="7" height="7" fill="${playingCardFill}"/>
+                            <line x1="0" y1="0" x2="7" y2="7" stroke="${playingCardLinenLineColor}" stroke-width="0.9"/>
+                            <line x1="7" y1="0" x2="0" y2="7" stroke="${playingCardLinenLineColor}" stroke-width="0.9"/>
                         </pattern>
                     </defs>
                     <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}" fill="url(#linenPatternJoker)" stroke="#94a3b8" stroke-width="${cardStrokeWidth}"/>
                     <text x="${cardWidth/2}" y="${yJokerText}" font-size="${jokerTextSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle">Joker</text> 
-                    <text x="${cardWidth/2}" y="${yJokerEmoji}" font-size="${jokerEmojiSize}" text-anchor="middle">🃏</text> 
+                    <text x="${cardWidth/2}" y="${yJokerEmoji}" font-size="${jokerEmojiSize}" text-anchor="middle" dominant-baseline="central">🃏</text> 
                 </svg>`;
         }
 
-        function generateMajorArcanaSVG(fullCardName) {
-            let numberPart = "";
-            let namePart = fullCardName;
-            const parts = fullCardName.split(" - ");
-            if (parts.length === 2) {
-                numberPart = parts[0]; 
-                namePart = parts[1];   
+        // Helper function for text wrapping
+        function wrapText(text, maxWidth, fontSize, fontFamily, isItalic = false) { 
+            if (!text) return [''];
+            const words = text.split(' ');
+            const lines = [];
+            let currentLine = words[0] || ''; 
+            
+            const tempSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            tempSvg.style.visibility = "hidden";
+            tempSvg.style.position = "absolute";
+            if (document.body) {
+                document.body.appendChild(tempSvg);
             }
-            const nameWords = namePart.split(" ");
-            let line1 = namePart;
-            let line2 = "";
-            if (nameWords.length > 1 && namePart.length > 9 ) { 
-                 const splitIndex = Math.ceil(nameWords.length / 2); 
-                line1 = nameWords.slice(0, splitIndex).join(" ");
-                line2 = nameWords.slice(splitIndex).join(" ");
+            const tempTextElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            tempTextElement.setAttributeNS(null, "font-size", fontSize);
+            tempTextElement.setAttributeNS(null, "font-family", fontFamily);
+            if (isItalic) { 
+                tempTextElement.setAttributeNS(null, "font-style", "italic");
             }
-            const yNumberTop = majorArcanaNumberFontSize + 10; 
-            const yNameLine1 = cardHeight/2 - (line2 ? 17 : 0); 
-            const yNameLine2 = cardHeight/2 + majorArcanaNameFontSize - 19; 
-            const yBottomEmoji = cardHeight - 33; 
-            const bottomEmojiSize = 45; 
+            tempSvg.appendChild(tempTextElement);
+
+            for (let i = 1; i < words.length; i++) {
+                tempTextElement.textContent = currentLine + " " + words[i];
+                if (tempTextElement.getComputedTextLength() > maxWidth) {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                } else {
+                    currentLine += " " + words[i];
+                }
+            }
+            if (currentLine) lines.push(currentLine); 
+            if (document.body) { 
+                document.body.removeChild(tempSvg); 
+            }
+            return lines.length > 0 ? lines : ['']; 
+        }
+
+
+        function generateMajorArcanaSVG(cardData) { 
+            const originalCardName = cardData.originalName; 
+            let numberForCenterDisplay = ""; 
+            let titleTextForWrapping = ""; 
+            let emojisForRWS = cardData.emojis || ""; 
+
+            if (cardData.thothName) { 
+                titleTextForWrapping = cardData.thothName;
+                const namePartsForNumber = originalCardName.split(" - "); 
+                if (namePartsForNumber.length > 1) numberForCenterDisplay = namePartsForNumber[0];
+                emojisForRWS = ""; 
+            } else { 
+                const nameParts = originalCardName.split(" - ");
+                numberForCenterDisplay = nameParts[0]; 
+                titleTextForWrapping = nameParts[1]; 
+            }
+            
+            const wrappedNameLines = wrapText(titleTextForWrapping, cardWidth - 70, majorArcanaTitleFontSize, cardFontFamily, false); 
+            
+            let nameSVGtspans = '';
+            const yNameStart = majorArcanaTitleFontSize + 24; 
+            let currentNameBlockHeight = 0;
+
+            wrappedNameLines.forEach((line, index) => {
+                const dy = index > 0 ? majorArcanaTitleFontSize * 1.2 : 0;
+                nameSVGtspans += `<tspan x="${cardWidth/2}" dy="${index === 0 ? 0 : dy}px">${line}</tspan>`; 
+                currentNameBlockHeight += majorArcanaTitleFontSize * (index > 0 ? 1.2 : 1);
+            });
+             if (cardData.isReversed && !cardData.thothName) { // Only show (Reversed) for non-Thoth reversal decks
+                const reversedDy = wrappedNameLines.length > 0 && wrappedNameLines[0] !== '' ? (majorArcanaTitleFontSize * 0.5 + reversedTextFontSize * 0.7) : 0; 
+                nameSVGtspans += `<tspan x="${cardWidth/2}" dy="${reversedDy}px" font-size="${reversedTextFontSize}">${"(Reversed)"}</tspan>`; 
+                currentNameBlockHeight += reversedTextFontSize * 1.2;
+            }
+            
+            const yCenterElement = cardHeight / 2 + (majorArcanaNumberFontSize * 0.15); 
+            let centerDisplaySVG = `<text x="${cardWidth/2}" y="${yCenterElement}" font-size="${majorArcanaNumberFontSize}" fill="${tarotTextColor}" text-anchor="middle" dominant-baseline="central">${numberForCenterDisplay}</text>`;
+            
+            if (!cardData.thothName && emojisForRWS) { 
+                const yEmojiLine = yCenterElement + majorArcanaNumberFontSize * 0.55 + majorArcanaEmojiFontSize * 0.5; 
+                centerDisplaySVG += `<text x="${cardWidth/2}" y="${yEmojiLine}" font-size="${majorArcanaEmojiFontSize}" fill="${tarotTextColor}" text-anchor="middle" dominant-baseline="hanging">${emojisForRWS}</text>`;
+            }
+
+
+            const meaningText = cardData.meaning || '';
+            const meaningLines = wrapText(meaningText, cardWidth - 50, meaningFontSize, cardFontFamily, true); 
+            let meaningSVG = '';
+            const lineHeightMeaning = meaningFontSize * 1.2;
+            let yMeaningStartBottom = cardHeight - 24 - ((meaningLines.length -1) * lineHeightMeaning); 
+            
+            meaningLines.forEach((line, index) => {
+                meaningSVG += `<text x="${cardWidth/2}" y="${yMeaningStartBottom + (index * lineHeightMeaning)}" font-size="${meaningFontSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle">${line}</text>`; 
+            });
+            
             const randomSeed = Math.floor(Math.random() * 1000); 
 
             return `
@@ -236,30 +398,61 @@
                     
                     <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}" fill="none" stroke="#704214" stroke-width="${cardStrokeWidth}"/>
                     
-                    <text x="${cardWidth/2}" y="${yNumberTop}" font-size="${majorArcanaNumberFontSize}" fill="${tarotTextColor}" text-anchor="middle">${numberPart}</text> 
-                    <text x="${cardWidth/2}" y="${yNameLine1}" font-size="${majorArcanaNameFontSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle">${line1}</text>
-                    ${line2 ? `<text x="${cardWidth/2}" y="${yNameLine2}" font-size="${majorArcanaNameFontSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle">${line2}</text>` : ''}
-                    <text x="${cardWidth/2}" y="${yBottomEmoji}" font-size="${bottomEmojiSize}" text-anchor="middle">🔮</text> 
+                    <text x="${cardWidth/2}" y="${yNameStart}" font-size="${majorArcanaTitleFontSize}" fill="${tarotTextColor}" text-anchor="middle">
+                        ${nameSVGtspans}
+                    </text> 
+                    ${centerDisplaySVG}
+                    ${meaningSVG}
                 </svg>`;
         }
         
-        function generateMinorArcanaSVG(rank, suitNameWithEmoji) {
-            const suitInfo = tarotMinorSuitDetails[suitNameWithEmoji];
-            if (!suitInfo) return `<span>Error: Suit ${suitNameWithEmoji} not found</span>`;
-            let displayRank = rank.substring(0,1); 
-            if (rank === "Ace") displayRank = "1";
-            else if (rank === "Two") displayRank = "2";
-            else if (rank === "Three") displayRank = "3";
-            else if (rank === "Four") displayRank = "4";
-            else if (rank === "Five") displayRank = "5";
-            else if (rank === "Six") displayRank = "6";
-            else if (rank === "Seven") displayRank = "7";
-            else if (rank === "Eight") displayRank = "8";
-            else if (rank === "Nine") displayRank = "9";
-            else if (rank === "Ten") displayRank = "10";
-            else if (rank === "Knight") displayRank = "Kn";
-            const yRankTop = rankFontSize + 6; 
-            const ySuitTop = yRankTop + suitFontSize + 8; 
+        function generateMinorArcanaSVG(rank, suitNameWithEmoji, meaning, isReversed, isThoth = false, subtitle = "") {
+            const suitDetails = isThoth ? thothTarotMinorSuitDetails : tarotMinorSuitDetails;
+            // For Thoth, suitNameWithEmoji is just the suit name like "Wands". For RWS, it includes emoji.
+            const suitInfo = isThoth ? suitDetails[suitNameWithEmoji] : suitDetails[suitNameWithEmoji];
+
+
+            if (!suitInfo) return `<span>Error: Suit ${suitNameWithEmoji} not found for Minor Arcana type ${isThoth ? 'Thoth' : 'RWS'}</span>`;
+            
+            const baseTitleText = `${rank} of ${suitInfo.name}`; 
+            
+            const wrappedTitleLines = wrapText(baseTitleText, cardWidth - 70, minorArcanaCardNameFontSize, cardFontFamily, false); 
+            
+            let titleSVGtspans = '';
+            const yCardNameStart = minorArcanaCardNameFontSize + 18; 
+            let currentTitleBlockHeight = 0;
+
+            wrappedTitleLines.forEach((line, index) => {
+                const dy = index > 0 ? minorArcanaCardNameFontSize * 1.2 : 0;
+                titleSVGtspans += `<tspan x="${cardWidth/2}" dy="${index === 0 ? 0 : dy}px">${line}</tspan>`; 
+                currentTitleBlockHeight += minorArcanaCardNameFontSize * (index > 0 ? 1.2 : 1);
+            });
+
+            if (isThoth && subtitle) {
+                const subtitleDy = (wrappedTitleLines.length > 0 && wrappedTitleLines[0] !== '') ? (minorArcanaCardNameFontSize * 0.5 + thothSubtitleFontSize * 0.7) : 0;
+                titleSVGtspans += `<tspan x="${cardWidth/2}" dy="${subtitleDy}px" font-size="${thothSubtitleFontSize}">${subtitle}</tspan>`;
+                currentTitleBlockHeight += thothSubtitleFontSize * 1.2;
+            }
+
+
+            if (isReversed && !isThoth) { // Only show (Reversed) for non-Thoth reversal decks
+                const reversedDy = currentTitleBlockHeight > 0 ? ( (isThoth && subtitle ? thothSubtitleFontSize : minorArcanaCardNameFontSize) * 0.5 + reversedTextFontSize * 0.7) : 0; 
+                titleSVGtspans += `<tspan x="${cardWidth/2}" dy="${reversedDy}px" font-size="${reversedTextFontSize}">${"(Reversed)"}</tspan>`; 
+                currentTitleBlockHeight += reversedTextFontSize * 1.2;
+            }
+            
+            const yCenterEmoji = cardHeight / 2 + (centerSuitFontSize * 0.3); 
+
+            const meaningText = meaning || '';
+            const meaningLines = wrapText(meaningText, cardWidth - 50, meaningFontSize, cardFontFamily, true); 
+            let meaningSVG = '';
+            const lineHeightMeaning = meaningFontSize * 1.2;
+            let yMeaningStart = cardHeight - 24 - ((meaningLines.length -1) * lineHeightMeaning); 
+            
+            meaningLines.forEach((line, index) => {
+                meaningSVG += `<text x="${cardWidth/2}" y="${yMeaningStart + (index * lineHeightMeaning)}" font-size="${meaningFontSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle">${line}</text>`; 
+            });
+
             const randomSeed = Math.floor(Math.random() * 1000);
 
             return `
@@ -283,9 +476,12 @@
 
                     <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}" fill="none" stroke="#704214" stroke-width="${cardStrokeWidth}"/>
                     
-                    <text x="${cornerXOffset}" y="${yRankTop}" font-size="${rankFontSize}" fill="${tarotTextColor}" text-anchor="middle">${displayRank}</text> 
-                    <text x="${cornerXOffset}" y="${ySuitTop}" font-size="${suitFontSize}" fill="${suitInfo.color}" text-anchor="middle">${suitInfo.emoji}</text> 
-                    <text x="${cardWidth/2}" y="${cardHeight/2 + centerSuitFontSize/3}" font-size="${centerSuitFontSize}" fill="${suitInfo.color}" text-anchor="middle">${suitInfo.emoji}</text> 
+                    <text x="${cardWidth/2}" y="${yCardNameStart}" font-size="${minorArcanaCardNameFontSize}" fill="${tarotTextColor}" text-anchor="middle">
+                        ${titleSVGtspans}
+                    </text> 
+                    
+                    <text x="${cardWidth/2}" y="${yCenterEmoji}" font-size="${centerSuitFontSize}" fill="${suitInfo.color}" text-anchor="middle" dominant-baseline="central">${suitInfo.emoji}</text> 
+                    ${meaningSVG}
                 </svg>`;
         }
 
@@ -300,6 +496,7 @@
                         for (let rank of playingCardRanks) {
                             currentDeck.push({ 
                                 name: `${rank} of ${suitName}`, 
+                                originalName: `${rank} of ${suitName}`, 
                                 type: 'playing_card', 
                                 svg: generatePlayingCardSVG(rank, suitName) 
                             });
@@ -311,37 +508,123 @@
                         for (let rank of playingCardRanks) {
                              currentDeck.push({ 
                                 name: `${rank} of ${suitName}`, 
+                                originalName: `${rank} of ${suitName}`,
                                 type: 'playing_card', 
                                 svg: generatePlayingCardSVG(rank, suitName) 
                             });
                         }
                     }
-                    currentDeck.push({ name: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
-                    currentDeck.push({ name: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
+                    currentDeck.push({ name: 'Joker 🃏', originalName: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
+                    currentDeck.push({ name: 'Joker 🃏', originalName: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
                     break;
-                case 'tarot_major':
-                    majorArcanaNames.forEach(cardName => { 
+                case 'tarot_major': 
+                    majorArcanaData.forEach(cardData => { 
                         currentDeck.push({ 
-                            name: cardName, 
-                            type: 'tarot_major', 
-                            svg: generateMajorArcanaSVG(cardName) 
+                            name: cardData.name, 
+                            originalName: cardData.name,
+                            meaning: cardData.meaning,
+                            reversedMeaning: cardData.reversedMeaning || "Reversed interpretation", 
+                            emojis: cardData.emojis || "", 
+                            type: 'tarot_major_svg', 
+                            isReversed: false, 
+                            svgGenerator: 'major' 
                         });
                     });
                     break;
-                case 'tarot_full':
-                    majorArcanaNames.forEach(cardName => { 
+                case 'tarot_full': 
+                    majorArcanaData.forEach(cardData => { 
                         currentDeck.push({ 
-                            name: cardName, 
-                            type: 'tarot_major', 
-                            svg: generateMajorArcanaSVG(cardName) 
+                            name: cardData.name, 
+                            originalName: cardData.name,
+                            meaning: cardData.meaning,
+                            reversedMeaning: cardData.reversedMeaning || "Reversed interpretation",
+                            emojis: cardData.emojis || "", 
+                            type: 'tarot_major_svg', 
+                            isReversed: false,
+                            svgGenerator: 'major'
                         });
                     });
                     for (let suitNameWithEmoji in tarotMinorSuitDetails) { 
                         for (let rank of tarotRanks) {
+                            const cardFullName = `${rank} of ${suitNameWithEmoji}`; 
+                            const meaning = minorArcanaMeanings[cardFullName] || "Key meanings vary";
+                            const reversedMeaning = minorArcanaReversedMeanings[cardFullName] || "Reversed interpretation";
                             currentDeck.push({ 
-                                name: `${rank} of ${suitNameWithEmoji}`, 
-                                type: 'tarot_minor', 
-                                svg: generateMinorArcanaSVG(rank, suitNameWithEmoji) 
+                                name: cardFullName, 
+                                originalName: cardFullName,
+                                meaning: meaning, 
+                                reversedMeaning: reversedMeaning,
+                                type: 'tarot_minor_svg', 
+                                isReversed: false,
+                                rank: rank, 
+                                suit: suitNameWithEmoji, 
+                                svgGenerator: 'minor' 
+                            });
+                        }
+                    }
+                    break;
+                case 'tarot_reversals': 
+                    majorArcanaData.forEach(cardData => { 
+                        currentDeck.push({ 
+                            name: cardData.name, 
+                            originalName: cardData.name, 
+                            meaning: cardData.meaning, 
+                            reversedMeaning: cardData.reversedMeaning || "Reversed interpretation",
+                            emojis: cardData.emojis || "", 
+                            type: 'tarot_major_reversals', 
+                            isReversed: false, 
+                            svgGenerator: 'major'
+                        });
+                    });
+                    for (let suitNameWithEmoji in tarotMinorSuitDetails) { 
+                        for (let rank of tarotRanks) {
+                            const cardFullName = `${rank} of ${suitNameWithEmoji}`;
+                            const meaning = minorArcanaMeanings[cardFullName] || "Key meanings vary";
+                            const reversedMeaning = minorArcanaReversedMeanings[cardFullName] || "Reversed interpretation";
+                            currentDeck.push({ 
+                                name: cardFullName, 
+                                originalName: cardFullName,
+                                meaning: meaning, 
+                                reversedMeaning: reversedMeaning,
+                                type: 'tarot_minor_reversals', 
+                                isReversed: false, 
+                                rank: rank, 
+                                suit: suitNameWithEmoji, 
+                                svgGenerator: 'minor'
+                            });
+                        }
+                    }
+                    break;
+                case 'thoth_tarot': 
+                    thothMajorArcanaData.forEach(cardData => {
+                        currentDeck.push({
+                            name: cardData.thothName, 
+                            originalName: cardData.name, 
+                            meaning: cardData.meaning,
+                            // No reversedMeaning needed for Thoth display if not using reversals for it
+                            number: cardData.name.split(" - ")[0], 
+                            thothName: cardData.thothName, 
+                            type: 'thoth_major', 
+                            isReversed: false, 
+                            svgGenerator: 'major_thoth' 
+                        });
+                    });
+                    for (let suitName in thothTarotMinorSuitDetails) { 
+                        for (let rank of thothTarotRanks) {
+                            const cardFullNameForLookup = `${rank} of ${suitName}`; // For subtitle/meaning lookup
+                            const cardDisplayName = `${rank} of ${suitName}`; // For display name in deck object
+                            const subtitle = thothMinorArcanaSubtitles[cardFullNameForLookup] || "";
+                            const meaning = thothMinorArcanaMeanings[cardFullNameForLookup] || "Thoth meaning";
+                            currentDeck.push({
+                                name: cardDisplayName,
+                                originalName: cardDisplayName,
+                                meaning: meaning,
+                                subtitle: subtitle,
+                                type: 'thoth_minor', 
+                                isReversed: false, 
+                                rank: rank,
+                                suit: suitName, 
+                                svgGenerator: 'minor_thoth' 
                             });
                         }
                     }
@@ -351,13 +634,14 @@
                         for (let rank of playingCardRanks) {
                              currentDeck.push({ 
                                 name: `${rank} of ${suitName}`, 
+                                originalName: `${rank} of ${suitName}`,
                                 type: 'playing_card', 
                                 svg: generatePlayingCardSVG(rank, suitName) 
                             });
                         }
                     }
-                    currentDeck.push({ name: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
-                    currentDeck.push({ name: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
+                    currentDeck.push({ name: 'Joker 🃏', originalName: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
+                    currentDeck.push({ name: 'Joker 🃏', originalName: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
             }
         }
 
@@ -371,7 +655,18 @@
                 }; 
             }
             const randomIndex = Math.floor(Math.random() * currentDeck.length);
-            return currentDeck[randomIndex];
+            const card = { ...currentDeck[randomIndex] }; 
+
+            // Only apply reversal logic for decks explicitly marked with '_reversals' 
+            // AND not for the 'thoth_tarot' deck (which is now non-reversal).
+            if (card.type && card.type.includes('_reversals') && card.type !== 'thoth_major' && card.type !== 'thoth_minor') { 
+                card.isReversed = (Math.random() < 0.5);
+                card.meaning = card.isReversed ? (card.reversedMeaning || "Reversed interpretation") : card.meaning;
+            } else {
+                 card.isReversed = false; 
+                 card.meaning = card.meaning || "Meaning not available"; 
+            }
+            return card;
         }
 
         // --- Event Listener for Draw Button ---
@@ -380,16 +675,11 @@
             
             cardDisplayArea.innerHTML = ''; 
 
-            if (selectedCard && selectedCard.image_url) { 
-                const img = document.createElement('img');
-                img.src = selectedCard.image_url;
-                img.alt = selectedCard.name;
-                img.onerror = function() {
-                    this.onerror=null; 
-                    this.src=`https://placehold.co/${cardWidth}x${cardHeight}/D2B48C/111827?text=Image+Not+Found`;
-                };
-                cardDisplayArea.appendChild(img);
-            } else if (selectedCard && selectedCard.svg) { 
+            if (selectedCard.svgGenerator === 'major' || selectedCard.svgGenerator === 'major_thoth') {
+                cardDisplayArea.innerHTML = generateMajorArcanaSVG(selectedCard); 
+            } else if (selectedCard.svgGenerator === 'minor' || selectedCard.svgGenerator === 'minor_thoth') {
+                cardDisplayArea.innerHTML = generateMinorArcanaSVG(selectedCard.rank, selectedCard.suit, selectedCard.meaning, selectedCard.isReversed, selectedCard.type.includes('thoth'), selectedCard.subtitle); 
+            } else if (selectedCard.svg) { 
                 cardDisplayArea.innerHTML = selectedCard.svg;
             } else { 
                  const textSpan = document.createElement('span');
@@ -397,23 +687,18 @@
                 textSpan.textContent = selectedCard && selectedCard.name ? selectedCard.name : "Error displaying card.";
                 cardDisplayArea.appendChild(textSpan);
             }
-            
-            if (drawCardButton.textContent === 'Draw a card') { 
-                drawCardButton.textContent = 'Draw Another card'; 
-            }
         });
 
         // --- Event Listener for Deck Type Change ---
         deckTypeSelector.addEventListener('change', function() {
-            cardDisplayArea.innerHTML = '<span class="card-display-text">Click the button to draw a card.</span>';
-            drawCardButton.textContent = 'Draw a card'; 
+            cardDisplayArea.innerHTML = '<span class="card-display-text"></span>'; 
         });
 
         // --- Initial Setup ---
         document.addEventListener('DOMContentLoaded', () => {
+            cardDisplayArea.innerHTML = '<span class="card-display-text"></span>'; 
             createDeck(); 
         });
     </script>
 </body>
 </html>
-
