@@ -228,7 +228,7 @@
         const majorArcanaNumberFontSize = 52; 
         const majorArcanaEmojiFontSize = 22; 
         const minorArcanaCardNameFontSize = 29; 
-        const thothSubtitleFontSize = 22; // Font size for Thoth Minor Arcana subtitles
+        const thothSubtitleFontSize = 22; 
         const meaningFontSize = 16; 
         const reversedTextFontSize = 18; 
         const cornerXOffset = 36; 
@@ -350,7 +350,7 @@
                 nameSVGtspans += `<tspan x="${cardWidth/2}" dy="${index === 0 ? 0 : dy}px">${line}</tspan>`; 
                 currentNameBlockHeight += majorArcanaTitleFontSize * (index > 0 ? 1.2 : 1);
             });
-             if (cardData.isReversed && !cardData.thothName) { // Only show (Reversed) for non-Thoth reversal decks
+             if (cardData.isReversed && !cardData.thothName) { 
                 const reversedDy = wrappedNameLines.length > 0 && wrappedNameLines[0] !== '' ? (majorArcanaTitleFontSize * 0.5 + reversedTextFontSize * 0.7) : 0; 
                 nameSVGtspans += `<tspan x="${cardWidth/2}" dy="${reversedDy}px" font-size="${reversedTextFontSize}">${"(Reversed)"}</tspan>`; 
                 currentNameBlockHeight += reversedTextFontSize * 1.2;
@@ -408,7 +408,6 @@
         
         function generateMinorArcanaSVG(rank, suitNameWithEmoji, meaning, isReversed, isThoth = false, subtitle = "") {
             const suitDetails = isThoth ? thothTarotMinorSuitDetails : tarotMinorSuitDetails;
-            // For Thoth, suitNameWithEmoji is just the suit name like "Wands". For RWS, it includes emoji.
             const suitInfo = isThoth ? suitDetails[suitNameWithEmoji] : suitDetails[suitNameWithEmoji];
 
 
@@ -435,7 +434,7 @@
             }
 
 
-            if (isReversed && !isThoth) { // Only show (Reversed) for non-Thoth reversal decks
+            if (isReversed && !isThoth) { 
                 const reversedDy = currentTitleBlockHeight > 0 ? ( (isThoth && subtitle ? thothSubtitleFontSize : minorArcanaCardNameFontSize) * 0.5 + reversedTextFontSize * 0.7) : 0; 
                 titleSVGtspans += `<tspan x="${cardWidth/2}" dy="${reversedDy}px" font-size="${reversedTextFontSize}">${"(Reversed)"}</tspan>`; 
                 currentTitleBlockHeight += reversedTextFontSize * 1.2;
@@ -601,7 +600,6 @@
                             name: cardData.thothName, 
                             originalName: cardData.name, 
                             meaning: cardData.meaning,
-                            // No reversedMeaning needed for Thoth display if not using reversals for it
                             number: cardData.name.split(" - ")[0], 
                             thothName: cardData.thothName, 
                             type: 'thoth_major', 
@@ -611,8 +609,8 @@
                     });
                     for (let suitName in thothTarotMinorSuitDetails) { 
                         for (let rank of thothTarotRanks) {
-                            const cardFullNameForLookup = `${rank} of ${suitName}`; // For subtitle/meaning lookup
-                            const cardDisplayName = `${rank} of ${suitName}`; // For display name in deck object
+                            const cardFullNameForLookup = `${rank} of ${suitName}`; 
+                            const cardDisplayName = `${rank} of ${suitName}`; 
                             const subtitle = thothMinorArcanaSubtitles[cardFullNameForLookup] || "";
                             const meaning = thothMinorArcanaMeanings[cardFullNameForLookup] || "Thoth meaning";
                             currentDeck.push({
@@ -657,9 +655,7 @@
             const randomIndex = Math.floor(Math.random() * currentDeck.length);
             const card = { ...currentDeck[randomIndex] }; 
 
-            // Only apply reversal logic for decks explicitly marked with '_reversals' 
-            // AND not for the 'thoth_tarot' deck (which is now non-reversal).
-            if (card.type && card.type.includes('_reversals') && card.type !== 'thoth_major' && card.type !== 'thoth_minor') { 
+            if (card.type && card.type.includes('_reversals') && !card.type.startsWith('thoth_')) { 
                 card.isReversed = (Math.random() < 0.5);
                 card.meaning = card.isReversed ? (card.reversedMeaning || "Reversed interpretation") : card.meaning;
             } else {
