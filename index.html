@@ -7,9 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet"> 
-    <link href="https://fonts.googleapis.com/css2?family=Almendra&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans Display', sans-serif; 
@@ -115,7 +112,7 @@
             "Clubs ♣": { symbol: "♣", color: "#1f2937" }, 
             "Spades ♠": { symbol: "♠", color: "#1f2937" }  
         };
-        const playingCardRanks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']; 
+        const playingCardRanks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']; 
         
         const majorArcanaData = [ // Rider-Waite-Smith based
             { name: "0 - The Fool", meaning: "Beginnings, innocence, spontaneity, a free spirit", reversedMeaning: "Recklessness, taken advantage of, inconsideration", emojis: "🚶‍♂️🎒🌅" },
@@ -143,28 +140,28 @@
         ];
 
         const thothMajorArcanaData = [
-            { name: "0 - The Fool", thothName: "The Fool", number: "0", meaning: "New beginnings, spontaneity, faith", reversedMeaning: "Recklessness, folly, lack of consideration" },
-            { name: "I - The Magus", thothName: "The Magus", number: "I", meaning: "Willpower, skill, manifestation", reversedMeaning: "Deception, manipulation, misuse of power" },
-            { name: "II - The Priestess", thothName: "The Priestess", number: "II", meaning: "Intuition, secrets, hidden knowledge", reversedMeaning: "Hidden agendas, superficiality, ignorance" },
-            { name: "III - The Empress", thothName: "The Empress", number: "III", meaning: "Nurturing, fertility, abundance", reversedMeaning: "Smothering, dependence, creative block" },
-            { name: "IV - The Emperor", thothName: "The Emperor", number: "IV", meaning: "Authority, structure, control", reversedMeaning: "Domination, rigidity, misuse of power" },
-            { name: "V - The Hierophant", thothName: "The Hierophant", number: "V", meaning: "Tradition, convention, guidance", reversedMeaning: "Rebellion, non-conformity, new approaches" },
-            { name: "VI - The Lovers", thothName: "The Lovers", number: "VI", meaning: "Union, choices, relationships", reversedMeaning: "Disharmony, indecision, conflict" },
-            { name: "VII - The Chariot", thothName: "The Chariot", number: "VII", meaning: "Victory, willpower, control", reversedMeaning: "Lack of direction, aggression, defeat" },
-            { name: "VIII - Adjustment", thothName: "Adjustment", number: "VIII", meaning: "Balance, fairness, truth, karma", reversedMeaning: "Injustice, imbalance, dishonesty" }, 
-            { name: "IX - The Hermit", thothName: "The Hermit", number: "IX", meaning: "Introspection, wisdom, solitude", reversedMeaning: "Isolation, loneliness, withdrawal" },
-            { name: "X - Fortune", thothName: "Fortune", number: "X", meaning: "Cycles, destiny, turning points", reversedMeaning: "Bad luck, resistance to change, upheaval" },
-            { name: "XI - Lust", thothName: "Lust", number: "XI", meaning: "Passion, courage, inner strength", reversedMeaning: "Weakness, self-doubt, lack of control" }, 
-            { name: "XII - The Hanged Man", thothName: "The Hanged Man", number: "XII", meaning: "New perspective, surrender, sacrifice", reversedMeaning: "Stagnation, martyrdom, indecision" },
-            { name: "XIII - Death", thothName: "Death", number: "XIII", meaning: "Transformation, endings, new beginnings", reversedMeaning: "Resistance to change, stagnation" },
-            { name: "XIV - Art", thothName: "Art", number: "XIV", meaning: "Integration, balance, alchemy", reversedMeaning: "Imbalance, lack of harmony, extremes" }, 
-            { name: "XV - The Devil", thothName: "The Devil", number: "XV", meaning: "Bondage, materialism, temptation", reversedMeaning: "Freedom, release, breaking free" },
-            { name: "XVI - The Tower", thothName: "The Tower", number: "XVI", meaning: "Sudden upheaval, revelation, crisis", reversedMeaning: "Avoiding disaster, fear of change" },
-            { name: "XVII - The Star", thothName: "The Star", number: "XVII", meaning: "Hope, inspiration, serenity", reversedMeaning: "Despair, discouragement, insecurity" },
-            { name: "XVIII - The Moon", thothName: "The Moon", number: "XVIII", meaning: "Illusion, fear, subconscious", reversedMeaning: "Clarity, overcoming fear, confusion" },
-            { name: "XIX - The Sun", thothName: "The Sun", number: "XIX", meaning: "Joy, success, vitality", reversedMeaning: "Lack of success, pessimism, sadness" },
-            { name: "XX - The Aeon", thothName: "The Aeon", number: "XX", meaning: "Awakening, new era, judgment", reversedMeaning: "Lack of self-awareness, stagnation" }, 
-            { name: "XXI - The Universe", thothName: "The Universe", number: "XXI", meaning: "Completion, wholeness, integration", reversedMeaning: "Incompletion, lack of closure, limitation" } 
+            { name: "0 - The Fool", thothName: "The Fool", number: "0", meaning: "Innocence, new beginnings, faith, spontaneity, the unexpected journey." },
+            { name: "I - The Magus", thothName: "The Magus", number: "I", meaning: "Willpower, skill, communication, manifestation, action, adroitness." },
+            { name: "II - The Priestess", thothName: "The Priestess", number: "II", meaning: "Intuition, secrets, subconscious, wisdom, mystery, purity." },
+            { name: "III - The Empress", thothName: "The Empress", number: "III", meaning: "Nurturing, fertility, abundance, nature, beauty, love." },
+            { name: "IV - The Emperor", thothName: "The Emperor", number: "IV", meaning: "Authority, structure, control, stability, reason, leadership." },
+            { name: "V - The Hierophant", thothName: "The Hierophant", number: "V", meaning: "Tradition, convention, teaching, guidance, institutions, conformity." },
+            { name: "VI - The Lovers", thothName: "The Lovers", number: "VI", meaning: "Union, choices, relationships, analysis, duality, harmony." },
+            { name: "VII - The Chariot", thothName: "The Chariot", number: "VII", meaning: "Victory, willpower, control, determination, forward motion." },
+            { name: "VIII - Adjustment", thothName: "Adjustment", number: "VIII", meaning: "Balance, fairness, truth, karma, equilibrium, justice." }, 
+            { name: "IX - The Hermit", thothName: "The Hermit", number: "IX", meaning: "Introspection, wisdom, solitude, inner guidance, prudence." },
+            { name: "X - Fortune", thothName: "Fortune", number: "X", meaning: "Cycles, destiny, turning points, luck, change, fate." },
+            { name: "XI - Lust", thothName: "Lust", number: "XI", meaning: "Passion, courage, inner strength, vitality, raw energy, creative force." }, 
+            { name: "XII - The Hanged Man", thothName: "The Hanged Man", number: "XII", meaning: "New perspective, surrender, sacrifice, letting go, suspension." },
+            { name: "XIII - Death", thothName: "Death", number: "XIII", meaning: "Transformation, endings, new beginnings, release, change." },
+            { name: "XIV - Art", thothName: "Art", number: "XIV", meaning: "Integration, balance, alchemy, synthesis, harmony, combination." }, 
+            { name: "XV - The Devil", thothName: "The Devil", number: "XV", meaning: "Bondage, materialism, temptation, illusion, creative impulse." },
+            { name: "XVI - The Tower", thothName: "The Tower", number: "XVI", meaning: "Sudden upheaval, revelation, crisis, destruction, war." },
+            { name: "XVII - The Star", thothName: "The Star", number: "XVII", meaning: "Hope, inspiration, serenity, spiritual guidance, meditation." },
+            { name: "XVIII - The Moon", thothName: "The Moon", number: "XVIII", meaning: "Illusion, fear, subconscious, intuition, dreams, deception." },
+            { name: "XIX - The Sun", thothName: "The Sun", number: "XIX", meaning: "Joy, success, vitality, clarity, optimism, enlightenment." },
+            { name: "XX - The Aeon", thothName: "The Aeon", number: "XX", meaning: "Awakening, new era, judgment, transformation, new current." }, 
+            { name: "XXI - The Universe", thothName: "The Universe", number: "XXI", meaning: "Completion, wholeness, integration, fulfillment, the Great Work." } 
         ];
 
 
@@ -184,9 +181,122 @@
         const tarotRanks = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Page", "Knight", "Queen", "King"]; 
         const thothTarotRanks = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Princess", "Prince", "Queen", "Knight"]; 
         
-        const minorArcanaMeanings = { /* ... RWS meanings ... */ }; // Placeholder, assuming these are populated elsewhere if needed
-        const minorArcanaReversedMeanings = { /* ... RWS reversed meanings ... */ }; // Placeholder
-        
+        const minorArcanaMeanings = {
+            "Ace of Wands 🪄": "New inspiration, creative spark, potent energy, new beginnings, enthusiasm", 
+            "Two of Wands 🪄": "Future planning, progress, decisions, discovery, courage, taking the lead", 
+            "Three of Wands 🪄": "Preparation, foresight, enterprise, expansion, looking ahead, initial success",
+            "Four of Wands 🪄": "Celebration, joy, harmony, relaxation, homecoming, stability, community", 
+            "Five of Wands 🪄": "Conflict, disagreements, competition, tension, ambition, minor struggles", 
+            "Six of Wands 🪄": "Public recognition, victory, success, self-confidence, progress, accolades",
+            "Seven of Wands 🪄": "Challenge, competition, protection, perseverance, standing ground, defending beliefs", 
+            "Eight of Wands 🪄": "Movement, action, speed, air travel, quick decisions, news, progress", 
+            "Nine of Wands 🪄": "Resilience, courage, persistence, test of faith, boundaries, final push",
+            "Ten of Wands 🪄": "Burden, responsibility, hard work, stress, accomplishment, feeling overwhelmed", 
+            "Page of Wands 🪄": "Enthusiasm, discovery, free spirit, exploration, new ideas, creative spark", 
+            "Knight of Wands 🪄": "Energy, passion, action, adventure, impulsiveness, haste, fearlessness",
+            "Queen of Wands 🪄": "Courageous, confident, independent, social, charismatic, determined, optimistic", 
+            "King of Wands 🪄": "Natural-born leader, vision, entrepreneur, honor, bold, inspiring",
+            "Ace of Cups 🏆": "New love, emotional awakening, compassion, creativity, new relationships, joy", 
+            "Two of Cups 🏆": "Unified love, partnership, mutual attraction, connection, harmony, reconciliation", 
+            "Three of Cups 🏆": "Celebration, friendship, creativity, collaborations, community, group events",
+            "Four of Cups 🏆": "Meditation, contemplation, apathy, re-evaluation, discontent, introspection", 
+            "Five of Cups 🏆": "Loss, regret, disappointment, despair, focusing on the negative, bereavement", 
+            "Six of Cups 🏆": "Revisiting the past, childhood memories, innocence, joy, nostalgia, kindness", 
+            "Seven of Cups 🏆": "Choices, wishful thinking, illusion, fantasy, opportunities, imagination, temptation", 
+            "Eight of Cups 🏆": "Disappointment, abandonment, withdrawal, escapism, moving on, seeking more", 
+            "Nine of Cups 🏆": "Wishes fulfilled, comfort, happiness, satisfaction, contentment, gratitude",
+            "Ten of Cups 🏆": "Divine love, blissful relationships, harmony, alignment, family joy, lasting happiness", 
+            "Page of Cups 🏆": "Creative opportunities, intuitive messages, curiosity, sensitivity, dreamer", 
+            "Knight of Cups 🏆": "Romance, charm, imagination, following the heart, artistic, invitations",
+            "Queen of Cups 🏆": "Compassionate, caring, intuitive, flowing, empathetic, supportive, psychic", 
+            "King of Cups 🏆": "Emotionally balanced, compassionate, diplomatic, wise counsel, tolerant",
+            "Ace of Swords ⚔️": "Mental clarity, new ideas, breakthroughs, truth, focus, intellect, victory", 
+            "Two of Swords ⚔️": "Difficult choices, indecision, stalemate, truce, impasse, blocked emotions, denial", 
+            "Three of Swords ⚔️": "Heartbreak, emotional pain, sorrow, grief, hurt, necessary truth, separation",
+            "Four of Swords ⚔️": "Rest, relaxation, meditation, contemplation, recuperation, peace, sanctuary", 
+            "Five of Swords ⚔️": "Conflict, tension, loss, defeat, win at all costs, betrayal, empty victory", 
+            "Six of Swords ⚔️": "Transition, change, rite of passage, releasing baggage, moving on, finding solutions",
+            "Seven of Swords ⚔️": "Betrayal, deception, getting away with something, stealth, strategy, cunning", 
+            "Eight of Swords ⚔️": "Self-imposed restriction, feeling trapped, negative thoughts, victim mentality, helplessness", 
+            "Nine of Swords ⚔️": "Anxiety, worry, fear, depression, nightmares, despair, guilt",
+            "Ten of Swords ⚔️": "Painful endings, deep wounds, betrayal, loss, crisis, rock bottom, ruin", 
+            "Page of Swords ⚔️": "New ideas, curiosity, thirst for knowledge, new ways of communicating, energetic, talkative", 
+            "Knight of Swords ⚔️": "Ambitious, action-oriented, driven, impulsive, direct, assertive, hasty",
+            "Queen of Swords ⚔️": "Independent, unbiased judgement, clear boundaries, direct communication, intelligent, perceptive", 
+            "King of Swords ⚔️": "Mental clarity, intellectual power, authority, truth, logical, stern, fair",
+            "Ace of Pentacles 🪙": "New financial or career opportunity, manifestation, abundance, prosperity, new venture", 
+            "Two of Pentacles 🪙": "Multiple priorities, time management, prioritization, adaptability, balancing, flexibility", 
+            "Three of Pentacles 🪙": "Teamwork, collaboration, learning, implementation, skill, craftsmanship, recognition",
+            "Four of Pentacles 🪙": "Control, stability, security, possessiveness, saving, conservatism, boundaries", 
+            "Five of Pentacles 🪙": "Financial loss, poverty, lack mindset, isolation, worry, insecurity, seeking help", 
+            "Six of Pentacles 🪙": "Giving, receiving, sharing wealth, generosity, charity, balance, fairness",
+            "Seven of Pentacles 🪙": "Long-term view, sustainable results, perseverance, investment, patience, assessment", 
+            "Eight of Pentacles 🪙": "Apprenticeship, repetitive tasks, mastery, skill development, diligence, dedication", 
+            "Nine of Pentacles 🪙": "Abundance, luxury, self-sufficiency, financial independence, rewards, discipline",
+            "Ten of Pentacles 🪙": "Legacy, inheritance, family wealth, financial security, tradition, stability, lasting success", 
+            "Page of Pentacles 🪙": "Manifestation, financial opportunity, skill development, new ventures, learning, diligence", 
+            "Knight of Pentacles 🪙": "Hard work, productivity, routine, conservatism, responsibility, patience, methodical",
+            "Queen of Pentacles 🪙": "Nurturing, practical, down-to-earth, motherly, resourceful, providing, financial security", 
+            "King of Pentacles 🪙": "Wealth, business acumen, security, provider, leadership, enterprising, abundance"
+        };
+        const minorArcanaReversedMeanings = {
+            "Ace of Wands 🪄": "Delays, creative blocks, lack of motivation or passion, missed opportunity, impotence", 
+            "Two of Wands 🪄": "Fear of change, playing safe, bad planning, lack of foresight, indecision", 
+            "Three of Wands 🪄": "Obstacles, delays, frustration, lack of progress, setbacks, wasted efforts",
+            "Four of Wands 🪄": "Lack of support, transience, home conflicts, instability, feeling unwelcome, cancelled celebration", 
+            "Five of Wands 🪄": "Avoiding conflict, respecting differences, suppressed tension, internal conflict, finding peace", 
+            "Six of Wands 🪄": "Egotism, lack of recognition, fall from grace, delays, arrogance, public disapproval",
+            "Seven of Wands 🪄": "Giving up, destroyed confidence, overwhelmed, feeling defeated, exhaustion, compromise", 
+            "Eight of Wands 🪄": "Panic, waiting, slowdown, frustration, resisting change, delays, loss of momentum", 
+            "Nine of Wands 🪄": "Exhaustion, fatigue, questioning motivations, defensive, paranoia, giving in",
+            "Ten of Wands 🪄": "Inability to delegate, overstressed, burnt out, letting go of burdens, collapse", 
+            "Page of Wands 🪄": "Lack of direction, procrastination, creating conflict, hesitancy, uninspired, pessimism", 
+            "Knight of Wands 🪄": "Anger, impulsiveness, recklessness, impatience, lack of self-control, frustration",
+            "Queen of Wands 🪄": "Insecurity, jealousy, demanding, shrinking violet, lack of confidence, vindictive", 
+            "King of Wands 🪄": "Impulsive, overbearing, unachievable expectations, tyrannical, misuse of power, ineffective",
+            "Ace of Cups 🏆": "Repressed emotions, blocked creativity, sadness, unrequited love, emptiness, disappointment", 
+            "Two of Cups 🏆": "Imbalance, broken communication, disharmony, partnership issues, distrust, separation", 
+            "Three of Cups 🏆": "Overindulgence, gossip, isolation, stifled creativity, cancelled celebration, solitude",
+            "Four of Cups 🏆": "Missed opportunity, apathy, withdrawal, boredom, choosing to be alone, pessimism", 
+            "Five of Cups 🏆": "Acceptance, moving on, forgiveness, finding peace, healing, letting go of regret", 
+            "Six of Cups 🏆": "Stuck in past, leaving home, independence, rose-tinted glasses, naivety, unrealistic", 
+            "Seven of Cups 🏆": "Temptation, illusion, diversion, lack of choice, clarity, reality check, too many options", 
+            "Eight of Cups 🏆": "Stagnation, fear of change, avoidance, trying one more time, indecision, clinging", 
+            "Nine of Cups 🏆": "Unfulfilled wishes, disappointment, materialism, dissatisfaction, smugness, overindulgence",
+            "Ten of Cups 🏆": "Broken family, disharmony, unfulfilled, misaligned values, domestic disputes, shattered dreams", 
+            "Page of Cups 🏆": "Emotional immaturity, insecurity, disappointment, creative block, daydreams, moodiness", 
+            "Knight of Cups 🏆": "Moodiness, disappointment, unrealistic, jealousy, emotional manipulation, obsession",
+            "Queen of Cups 🏆": "Martyrdom, insecurity, dependence, emotional blackmail, needy, overly sensitive", 
+            "King of Cups 🏆": "Coldness, moodiness, bad advice, emotional manipulation, volatility, untrustworthy",
+            "Ace of Swords ⚔️": "Clouded judgment, confusion, lack of clarity, chaos, misinformation, destructive thoughts", 
+            "Two of Swords ⚔️": "Lesser of two evils, no right choice, confusion, indecision, information overload, turmoil", 
+            "Three of Swords ⚔️": "Recovery, forgiveness, moving on, releasing pain, optimism, healing from sorrow",
+            "Four of Swords ⚔️": "Restlessness, burnout, stress, exhaustion, need for action, awakening", 
+            "Five of Swords ⚔️": "Lingering resentment, desire to reconcile, forgiveness, making amends, surrender", 
+            "Six of Swords ⚔️": "Emotional baggage, unresolved issues, resisting transition, feeling stuck, difficult journey",
+            "Seven of Swords ⚔️": "Coming clean, rethinking approach, confessing, conscience, guilt, returning stolen goods", 
+            "Eight of Swords ⚔️": "Releasing limiting beliefs, new perspective, freedom, finding solutions, empowerment", 
+            "Nine of Swords ⚔️": "Hope, reaching out, releasing worry, recovery from despair, finding help, facing fears",
+            "Ten of Swords ⚔️": "Can't get worse, only upwards, inevitable end, survival, resisting an end, recovery", 
+            "Page of Swords ⚔️": "Deception, manipulation, all talk, gossip, defensive, scattered thoughts, cynicism", 
+            "Knight of Swords ⚔️": "No direction, disregard for consequences, impulsive, unfocused, aggressive, burnout",
+            "Queen of Swords ⚔️": "Cold hearted, cruel, bitterness, overly critical, pessimistic, malicious gossip", 
+            "King of Swords ⚔️": "Manipulative, cruel, weakness, irrational, abuse of power, dictator, tyrannical",
+            "Ace of Pentacles 🪙": "Lost opportunity, missed chance, bad investment, lack of planning, poor financial control", 
+            "Two of Pentacles 🪙": "Loss of balance, disorganized, overwhelmed, poor financial decisions, over-commitment", 
+            "Three of Pentacles 🪙": "Lack of teamwork, disorganized, group conflict, poor quality work, no collaboration",
+            "Four of Pentacles 🪙": "Greediness, stinginess, possessiveness, fear of lack, materialism, instability", 
+            "Five of Pentacles 🪙": "Recovery, charity, improvement, finding help, forgiveness, end of hardship", 
+            "Six of Pentacles 🪙": "Strings attached, stinginess, power dynamics, debt, one-sided charity, unpaid debts",
+            "Seven of Pentacles 🪙": "Work without results, distractions, lack of rewards, impatience, frustration, wasted effort", 
+            "Eight of Pentacles 🪙": "Lack of passion, uninspired, no motivation, poor quality, cutting corners, perfectionism", 
+            "Nine of Pentacles 🪙": "Reckless spending, living beyond means, false success, financial insecurity, over-investment",
+            "Ten of Pentacles 🪙": "Fleeting success, lack of stability, lack of resources, family disputes over money, financial loss", 
+            "Page of Pentacles 🪙": "Lack of commitment, greediness, laziness, missed financial opportunity, procrastination, bad news", 
+            "Knight of Pentacles 🪙": "Laziness, obsessiveness, work without reward, boredom, stagnation, irresponsibility",
+            "Queen of Pentacles 🪙": "Self-centeredness, jealousy, smothering, financial insecurity, work-life imbalance, disorganization", 
+            "King of Pentacles 🪙": "Greed, indulgence, sensuality, financially inept, gambler, corruption, stubbornness"
+        };
         const thothMinorArcanaSubtitles = {
             "Ace of Wands": "The Root of the Powers of Fire", "Two of Wands": "Dominion", "Three of Wands": "Virtue", "Four of Wands": "Completion", "Five of Wands": "Strife", "Six of Wands": "Victory", "Seven of Wands": "Valour", "Eight of Wands": "Swiftness", "Nine of Wands": "Strength", "Ten of Wands": "Oppression",
             "Ace of Cups": "The Root of the Powers of Water", "Two of Cups": "Love", "Three of Cups": "Abundance", "Four of Cups": "Luxury", "Five of Cups": "Disappointment", "Six of Cups": "Pleasure", "Seven of Cups": "Debauch", "Eight of Cups": "Indolence", "Nine of Cups": "Happiness", "Ten of Cups": "Satiety",
@@ -194,24 +304,64 @@
             "Ace of Disks": "The Root of the Powers of Earth", "Two of Disks": "Change", "Three of Disks": "Works", "Four of Disks": "Power", "Five of Disks": "Worry", "Six of Disks": "Success", "Seven of Disks": "Failure", "Eight of Disks": "Prudence", "Nine of Disks": "Gain", "Ten of Disks": "Wealth"
         };
         const thothMinorArcanaMeanings = { 
-            "Ace of Wands": "Primal energy, new initiative", "Two of Wands": "Taking charge, bold action", "Three of Wands": "Established strength, integrity", "Four of Wands": "Perfected work, celebration",
-            "Five of Wands": "Contest, struggle for dominance", "Six of Wands": "Triumph, success after effort", "Seven of Wands": "Courage against odds, bravery", "Eight of Wands": "Rapid progress, quick messages",
-            "Nine of Wands": "Great power, inner fortitude", "Ten of Wands": "Heavy burden, excessive pressure", 
-            "Princess of Wands": "Brilliance, courage, beauty", "Prince of Wands": "Swiftness, suddenness, impulsiveness", "Queen of Wands": "Authority, steady force", "Knight of Wands": "Fiery, active, impetuous power",
-            "Ace of Cups": "Emotional beginnings, receptivity", "Two of Cups": "Harmonious partnership, affection", "Three of Cups": "Joyful celebration, plenty", "Four of Cups": "Excessive pleasure, weariness",
-            "Five of Cups": "Emotional letdown, loss", "Six of Cups": "Joyful experience, delight", "Seven of Cups": "Illusionary success, corruption", "Eight of Cups": "Abandoned success, apathy",
-            "Nine of Cups": "Complete satisfaction, well-being", "Ten of Cups": "Lasting happiness, fulfillment",
-            "Princess of Cups": "Sweetness, beauty, gentleness", "Prince of Cups": "Subtlety, craft, passion", "Queen of Cups": "Receptivity, reflection", "Knight of Cups": "Grace, passive power",
-            "Ace of Swords": "Invoked power, mental breakthrough", "Two of Swords": "Balanced force, indecision resolved", "Three of Swords": "Unhappiness, inner conflict", "Four of Swords": "Rest from strife, respite",
-            "Five of Swords": "Loss, humiliation, infamy", "Six of Swords": "Earned success, intellectual journey", "Seven of Swords": "Unstable effort, partial success", "Eight of Swords": "Shortened force, restriction",
-            "Nine of Swords": "Despair, self-doubt, suffering", "Ten of Swords": "Destruction of mind, ruin",
-            "Princess of Swords": "Practicality, aggression", "Prince of Swords": "Intellect, skill in action", "Queen of Swords": "Clear perception, independence", "Knight of Swords": "Authoritative, logical power",
-            "Ace of Disks": "Root of Earth, material potential", "Two of Disks": "Harmonious movement, adaptation", "Three of Disks": "Material skill, collaboration", "Four of Disks": "Earthly control, stability",
-            "Five of Disks": "Material trouble, anxiety", "Six of Disks": "Material gain, generosity", "Seven of Disks": "Unfulfilled success, patience needed", "Eight of Disks": "Skill in material affairs, caution",
-            "Nine of Disks": "Material happiness, inheritance", "Ten of Disks": "Prosperity, lasting wealth",
-            "Princess of Disks": "Generative force, new growth", "Prince of Disks": "Solid practical force, endurance", "Queen of Disks": "Nurturing, groundedness", "Knight of Disks": "Productive, reliable power"
+            "Ace of Wands": "Primal energy, new initiative, creative force, the seed of fire.", 
+            "Two of Wands": "Taking charge, bold action, control asserted, focused will.", 
+            "Three of Wands": "Established strength, integrity, realization of purpose, virtue.", 
+            "Four of Wands": "Perfected work, celebration, rest after labor, established order.",
+            "Five of Wands": "Contest, struggle for dominance, competition, disruptive energy.", 
+            "Six of Wands": "Triumph, success after effort, recognition, leadership.", 
+            "Seven of Wands": "Courage against odds, bravery, defiance, holding one's ground.", 
+            "Eight of Wands": "Rapid progress, quick messages, sudden action, communication.",
+            "Nine of Wands": "Great power, inner fortitude, resilience, preparedness.", 
+            "Ten of Wands": "Heavy burden, excessive pressure, responsibility, feeling crushed.", 
+            "Princess of Wands": "Brilliance, courage, beauty, enthusiasm for new ideas, fiery nature.", 
+            "Prince of Wands": "Swiftness in action, suddenness, impulsiveness, daring, adventurous spirit.", 
+            "Queen of Wands": "Authority, steady force, independence, magnetism, self-assuredness.", 
+            "Knight of Wands": "Fiery, active, impetuous power, dynamic energy, transformative force.",
+            "Ace of Cups": "Emotional beginnings, receptivity, love's potential, the seed of water.", 
+            "Two of Cups": "Harmonious partnership, affection, mutual attraction, emotional exchange.", 
+            "Three of Cups": "Joyful celebration, plenty, emotional fulfillment, shared happiness.", 
+            "Four of Cups": "Excessive pleasure, weariness, emotional stability sought, luxury.",
+            "Five of Cups": "Emotional letdown, loss in pleasure, disillusionment, regret.", 
+            "Six of Cups": "Joyful experience, delight, emotional renewal, harmony.", 
+            "Seven of Cups": "Illusionary success, corruption, false hopes, deception in pleasure.", 
+            "Eight of Cups": "Abandoned success, apathy, emotional detachment, decline.",
+            "Nine of Cups": "Complete satisfaction, well-being, wishes granted, sensual joy.", 
+            "Ten of Cups": "Lasting happiness, fulfillment, emotional completion, perfect success.",
+            "Princess of Cups": "Sweetness, beauty, gentleness, romanticism, intuition, grace.", 
+            "Prince of Cups": "Subtlety, craft, passion, intensity of feeling, artistic nature.", 
+            "Queen of Cups": "Receptivity, reflection, imagination, empathy, profound feeling.", 
+            "Knight of Cups": "Grace, passive power, giver of pleasure, subtle influence.",
+            "Ace of Swords": "Invoked power, mental breakthrough, clarity of thought, truth, intellect.", 
+            "Two of Swords": "Balanced force, indecision resolved, truce, peace restored.", 
+            "Three of Swords": "Unhappiness, inner conflict, difficult realization, sorrow.", 
+            "Four of Swords": "Rest from strife, respite, mental recuperation, order.",
+            "Five of Swords": "Loss, humiliation, infamy, weakness, slander.", 
+            "Six of Swords": "Earned success, intellectual journey, clarity of passage, scientific approach.", 
+            "Seven of Swords": "Unstable effort, partial success, vacillation, lack of perseverance.", 
+            "Eight of Swords": "Shortened force, restriction, lack of perseverance, interference.",
+            "Nine of Swords": "Despair, self-torment, anxiety, suffering, cruelty.", 
+            "Ten of Swords": "Destruction of mind, ruin, end of delusion, reason run mad.",
+            "Princess of Swords": "Practicality, aggression, fixing of the volatile, logical mind.", 
+            "Prince of Swords": "Intellect, skill in action, cutting through illusion, incisive thought.", 
+            "Queen of Swords": "Clear perception, independence, mournful grace, keen observation.", 
+            "Knight of Swords": "Authoritative, logical power, warrior of the mind, decisive action.",
+            "Ace of Disks": "Root of Earth, material potential, new beginnings in physical world, prosperity.", 
+            "Two of Disks": "Harmonious movement, adaptation, balancing forces, change.", 
+            "Three of Disks": "Material skill, collaboration, constructive effort, works.", 
+            "Four of Disks": "Earthly control, stability, material security, power.",
+            "Five of Disks": "Material trouble, anxiety, insecurity, hardship, worry.", 
+            "Six of Disks": "Material gain, generosity, balanced prosperity, success.", 
+            "Seven of Disks": "Unfulfilled success, patience needed, re-evaluation, failure.", 
+            "Eight of Disks": "Skill in material affairs, caution, careful planning, prudence.",
+            "Nine of Disks": "Material happiness, inheritance, self-reliance, gain.", 
+            "Ten of Disks": "Prosperity, lasting success, material abundance, wealth.",
+            "Princess of Disks": "Generative force, new growth, pregnant with possibility, earthiness.", 
+            "Prince of Disks": "Solid practical force, endurance, unwavering effort, reliability.", 
+            "Queen of Disks": "Nurturing, groundedness, fertility of the earth, practicality.", 
+            "Knight of Disks": "Productive, reliable power, brings forth material results, steadfastness."
         };
-        const thothMinorArcanaReversedMeanings = { /* Thoth reversals are not used in this deck configuration */ };
+        
 
 
         let currentDeck = [];
@@ -243,7 +393,7 @@
         function generatePlayingCardSVG(rank, suitName) {
             const suitInfo = playingCardSuits[suitName];
             if (!suitInfo) return `<span>Error: Suit ${suitName} not found</span>`;
-            let displayRank = rank; 
+            let displayRank = rank || ''; 
             const yRankTop = rankFontSize + 7; 
             const playingCardCornerSuitSize = 43; 
             const ySuitTop = yRankTop + playingCardCornerSuitSize + 10; 
@@ -258,9 +408,9 @@
                         </pattern>
                     </defs>
                     <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}" fill="url(#linenPatternPlaying)" stroke="#94a3b8" stroke-width="${cardStrokeWidth}"/>
-                    <text x="${cornerXOffset}" y="${yRankTop}" font-size="${rankFontSize}" fill="${suitInfo.color}" text-anchor="middle">${displayRank}</text>
-                    <text x="${cornerXOffset}" y="${ySuitTop}" font-size="${playingCardCornerSuitSize}" fill="${suitInfo.color}" text-anchor="middle">${suitInfo.symbol}</text>
-                    <text x="${cardWidth/2}" y="${cardHeight/2 + centerSuitFontSize/3}" font-size="${centerSuitFontSize}" fill="${suitInfo.color}" text-anchor="middle" dominant-baseline="central">${suitInfo.symbol}</text>
+                    <text x="${cornerXOffset}" y="${yRankTop}" font-size="${rankFontSize}" fill="${suitInfo.color || tarotTextColor}" text-anchor="middle">${displayRank}</text>
+                    <text x="${cornerXOffset}" y="${ySuitTop}" font-size="${playingCardCornerSuitSize}" fill="${suitInfo.color || tarotTextColor}" text-anchor="middle">${suitInfo.symbol || ''}</text>
+                    <text x="${cardWidth/2}" y="${cardHeight/2 + centerSuitFontSize/3}" font-size="${centerSuitFontSize}" fill="${suitInfo.color || tarotTextColor}" text-anchor="middle" dominant-baseline="central">${suitInfo.symbol || ''}</text>
                 </svg>`;
         }
 
@@ -284,7 +434,6 @@
                 </svg>`;
         }
 
-        // Helper function for text wrapping
         function wrapText(text, maxWidth, fontSize, fontFamily, isItalic = false) { 
             if (!text) return [''];
             const words = text.split(' ');
@@ -294,7 +443,7 @@
             const tempSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             tempSvg.style.visibility = "hidden";
             tempSvg.style.position = "absolute";
-            if (document.body) {
+            if (document.body) { 
                 document.body.appendChild(tempSvg);
             }
             const tempTextElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -315,7 +464,7 @@
                 }
             }
             if (currentLine) lines.push(currentLine); 
-            if (document.body) { 
+            if (document.body && tempSvg.parentNode === document.body) { 
                 document.body.removeChild(tempSvg); 
             }
             return lines.length > 0 ? lines : ['']; 
@@ -323,56 +472,52 @@
 
 
         function generateMajorArcanaSVG(cardData) { 
-            const originalCardName = cardData.originalName; 
+            const originalCardName = cardData.originalName || ""; 
             let numberForCenterDisplay = ""; 
             let titleTextForWrapping = ""; 
             let emojisForRWS = cardData.emojis || ""; 
 
             if (cardData.thothName) { 
-                titleTextForWrapping = cardData.thothName;
-                const namePartsForNumber = originalCardName.split(" - "); 
-                if (namePartsForNumber.length > 1) numberForCenterDisplay = namePartsForNumber[0];
+                titleTextForWrapping = cardData.thothName || "";
+                numberForCenterDisplay = cardData.number || ""; 
                 emojisForRWS = ""; 
             } else { 
                 const nameParts = originalCardName.split(" - ");
-                numberForCenterDisplay = nameParts[0]; 
-                titleTextForWrapping = nameParts[1]; 
+                numberForCenterDisplay = (nameParts.length > 0 ? nameParts[0] : "") || ""; 
+                titleTextForWrapping = (nameParts.length > 1 ? nameParts[1] : originalCardName) || ""; 
             }
             
             const wrappedNameLines = wrapText(titleTextForWrapping, cardWidth - 70, majorArcanaTitleFontSize, cardFontFamily, false); 
             
             let nameSVGtspans = '';
             const yNameStart = majorArcanaTitleFontSize + 24; 
-            let currentNameBlockHeight = 0;
-
+            
             wrappedNameLines.forEach((line, index) => {
                 const dy = index > 0 ? majorArcanaTitleFontSize * 1.2 : 0;
-                nameSVGtspans += `<tspan x="${cardWidth/2}" dy="${index === 0 ? 0 : dy}px">${line}</tspan>`; 
-                currentNameBlockHeight += majorArcanaTitleFontSize * (index > 0 ? 1.2 : 1);
+                nameSVGtspans += `<tspan x="${cardWidth/2}" dy="${index === 0 ? 0 : dy}px">${line || ''}</tspan>`; 
             });
-             if (cardData.isReversed && !cardData.thothName) { 
-                const reversedDy = wrappedNameLines.length > 0 && wrappedNameLines[0] !== '' ? (majorArcanaTitleFontSize * 0.5 + reversedTextFontSize * 0.7) : 0; 
+             if (cardData.isReversed) { 
+                const reversedDy = wrappedNameLines.length > 0 && wrappedNameLines[0] !== '' ? (majorArcanaTitleFontSize * 0.5 + reversedTextFontSize * 0.7) : reversedTextFontSize*0.7; 
                 nameSVGtspans += `<tspan x="${cardWidth/2}" dy="${reversedDy}px" font-size="${reversedTextFontSize}">${"(Reversed)"}</tspan>`; 
-                currentNameBlockHeight += reversedTextFontSize * 1.2;
             }
             
             const yCenterElement = cardHeight / 2 + (majorArcanaNumberFontSize * 0.15); 
-            let centerDisplaySVG = `<text x="${cardWidth/2}" y="${yCenterElement}" font-size="${majorArcanaNumberFontSize}" fill="${tarotTextColor}" text-anchor="middle" dominant-baseline="central">${numberForCenterDisplay}</text>`;
+            let centerDisplaySVG = `<text x="${cardWidth/2}" y="${yCenterElement}" font-size="${majorArcanaNumberFontSize}" fill="${tarotTextColor}" text-anchor="middle" dominant-baseline="central">${numberForCenterDisplay || ''}</text>`;
             
             if (!cardData.thothName && emojisForRWS) { 
                 const yEmojiLine = yCenterElement + majorArcanaNumberFontSize * 0.55 + majorArcanaEmojiFontSize * 0.5; 
                 centerDisplaySVG += `<text x="${cardWidth/2}" y="${yEmojiLine}" font-size="${majorArcanaEmojiFontSize}" fill="${tarotTextColor}" text-anchor="middle" dominant-baseline="hanging">${emojisForRWS}</text>`;
             }
 
-
             const meaningText = cardData.meaning || '';
             const meaningLines = wrapText(meaningText, cardWidth - 50, meaningFontSize, cardFontFamily, true); 
-            let meaningSVG = '';
+            let meaningTspans = ''; 
             const lineHeightMeaning = meaningFontSize * 1.2;
-            let yMeaningStartBottom = cardHeight - 24 - ((meaningLines.length -1) * lineHeightMeaning); 
+            let yMeaningTextStart = cardHeight - 24 - ((meaningLines.length -1) * lineHeightMeaning); 
             
             meaningLines.forEach((line, index) => {
-                meaningSVG += `<text x="${cardWidth/2}" y="${yMeaningStartBottom + (index * lineHeightMeaning)}" font-size="${meaningFontSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle">${line}</text>`; 
+                const dy = index > 0 ? lineHeightMeaning : 0;
+                meaningTspans += `<tspan x="${cardWidth/2}" dy="${index === 0 ? 0 : dy}px">${line || ''}</tspan>`;
             });
             
             const randomSeed = Math.floor(Math.random() * 1000); 
@@ -391,65 +536,60 @@
                             <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}"/>
                         </clipPath>
                     </defs>
-                    
                     <g clip-path="url(#cardClipPathMajor_${randomSeed})">
                         <rect x="0" y="0" width="${cardWidth}" height="${cardHeight}" fill="${tarotCardFill}" filter="url(#parchmentFilterMajor_${randomSeed})" />
                     </g>
-                    
                     <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}" fill="none" stroke="#704214" stroke-width="${cardStrokeWidth}"/>
-                    
                     <text x="${cardWidth/2}" y="${yNameStart}" font-size="${majorArcanaTitleFontSize}" fill="${tarotTextColor}" text-anchor="middle">
                         ${nameSVGtspans}
                     </text> 
                     ${centerDisplaySVG}
-                    ${meaningSVG}
+                    <text x="${cardWidth/2}" y="${yMeaningTextStart}" font-size="${meaningFontSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle">
+                        ${meaningTspans}
+                    </text>
                 </svg>`;
         }
         
         function generateMinorArcanaSVG(rank, suitNameWithEmoji, meaning, isReversed, isThoth = false, subtitle = "") {
             const suitDetails = isThoth ? thothTarotMinorSuitDetails : tarotMinorSuitDetails;
-            const suitInfo = isThoth ? suitDetails[suitNameWithEmoji] : suitDetails[suitNameWithEmoji];
+            const currentSuitInfo = isThoth ? suitDetails[suitNameWithEmoji] : suitDetails[suitNameWithEmoji];
 
-
-            if (!suitInfo) return `<span>Error: Suit ${suitNameWithEmoji} not found for Minor Arcana type ${isThoth ? 'Thoth' : 'RWS'}</span>`;
+            if (!currentSuitInfo) return `<span>Error: Suit ${suitNameWithEmoji} not found</span>`;
             
-            const baseTitleText = `${rank} of ${suitInfo.name}`; 
+            const baseTitleText = `${rank || ''} of ${currentSuitInfo.name || ''}`; 
             
             const wrappedTitleLines = wrapText(baseTitleText, cardWidth - 70, minorArcanaCardNameFontSize, cardFontFamily, false); 
             
             let titleSVGtspans = '';
             const yCardNameStart = minorArcanaCardNameFontSize + 18; 
-            let currentTitleBlockHeight = 0;
-
+            
             wrappedTitleLines.forEach((line, index) => {
                 const dy = index > 0 ? minorArcanaCardNameFontSize * 1.2 : 0;
-                titleSVGtspans += `<tspan x="${cardWidth/2}" dy="${index === 0 ? 0 : dy}px">${line}</tspan>`; 
-                currentTitleBlockHeight += minorArcanaCardNameFontSize * (index > 0 ? 1.2 : 1);
+                titleSVGtspans += `<tspan x="${cardWidth/2}" dy="${index === 0 ? 0 : dy}px">${line || ''}</tspan>`; 
             });
 
             if (isThoth && subtitle) {
                 const subtitleDy = (wrappedTitleLines.length > 0 && wrappedTitleLines[0] !== '') ? (minorArcanaCardNameFontSize * 0.5 + thothSubtitleFontSize * 0.7) : 0;
-                titleSVGtspans += `<tspan x="${cardWidth/2}" dy="${subtitleDy}px" font-size="${thothSubtitleFontSize}">${subtitle}</tspan>`;
-                currentTitleBlockHeight += thothSubtitleFontSize * 1.2;
+                titleSVGtspans += `<tspan x="${cardWidth/2}" dy="${subtitleDy}px" font-size="${thothSubtitleFontSize}">${subtitle || ''}</tspan>`;
             }
 
-
-            if (isReversed && !isThoth) { 
-                const reversedDy = currentTitleBlockHeight > 0 ? ( (isThoth && subtitle ? thothSubtitleFontSize : minorArcanaCardNameFontSize) * 0.5 + reversedTextFontSize * 0.7) : 0; 
+            if (isReversed) { 
+                const reversedDy = (wrappedTitleLines.length > 0 && wrappedTitleLines[0] !== '') || (isThoth && subtitle) ? 
+                                   ((isThoth && subtitle ? thothSubtitleFontSize : minorArcanaCardNameFontSize) * 0.5 + reversedTextFontSize * 0.7) : 0; 
                 titleSVGtspans += `<tspan x="${cardWidth/2}" dy="${reversedDy}px" font-size="${reversedTextFontSize}">${"(Reversed)"}</tspan>`; 
-                currentTitleBlockHeight += reversedTextFontSize * 1.2;
             }
             
             const yCenterEmoji = cardHeight / 2 + (centerSuitFontSize * 0.3); 
 
             const meaningText = meaning || '';
             const meaningLines = wrapText(meaningText, cardWidth - 50, meaningFontSize, cardFontFamily, true); 
-            let meaningSVG = '';
+            let meaningTspans = ''; 
             const lineHeightMeaning = meaningFontSize * 1.2;
-            let yMeaningStart = cardHeight - 24 - ((meaningLines.length -1) * lineHeightMeaning); 
+            let yMeaningTextStart = cardHeight - 24 - ((meaningLines.length -1) * lineHeightMeaning); 
             
             meaningLines.forEach((line, index) => {
-                meaningSVG += `<text x="${cardWidth/2}" y="${yMeaningStart + (index * lineHeightMeaning)}" font-size="${meaningFontSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle">${line}</text>`; 
+                const dy = index > 0 ? lineHeightMeaning : 0;
+                meaningTspans += `<tspan x="${cardWidth/2}" dy="${index === 0 ? 0 : dy}px">${line || ''}</tspan>`;
             });
 
             const randomSeed = Math.floor(Math.random() * 1000);
@@ -468,19 +608,17 @@
                             <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}"/>
                         </clipPath>
                     </defs>
-                    
                     <g clip-path="url(#cardClipPathMinor_${randomSeed})">
                         <rect x="0" y="0" width="${cardWidth}" height="${cardHeight}" fill="${tarotCardFill}" filter="url(#parchmentFilterMinor_${randomSeed})" />
                     </g>
-
                     <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}" fill="none" stroke="#704214" stroke-width="${cardStrokeWidth}"/>
-                    
                     <text x="${cardWidth/2}" y="${yCardNameStart}" font-size="${minorArcanaCardNameFontSize}" fill="${tarotTextColor}" text-anchor="middle">
                         ${titleSVGtspans}
                     </text> 
-                    
-                    <text x="${cardWidth/2}" y="${yCenterEmoji}" font-size="${centerSuitFontSize}" fill="${suitInfo.color}" text-anchor="middle" dominant-baseline="central">${suitInfo.emoji}</text> 
-                    ${meaningSVG}
+                    <text x="${cardWidth/2}" y="${yCenterEmoji}" font-size="${centerSuitFontSize}" fill="${currentSuitInfo.color || tarotTextColor}" text-anchor="middle" dominant-baseline="central">${currentSuitInfo.emoji || ''}</text> 
+                    <text x="${cardWidth/2}" y="${yMeaningTextStart}" font-size="${meaningFontSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle">
+                        ${meaningTspans}
+                    </text>
                 </svg>`;
         }
 
@@ -516,6 +654,7 @@
                     currentDeck.push({ name: 'Joker 🃏', originalName: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
                     currentDeck.push({ name: 'Joker 🃏', originalName: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
                     break;
+                // Cartomancy case removed
                 case 'tarot_major': 
                     majorArcanaData.forEach(cardData => { 
                         currentDeck.push({ 
@@ -546,8 +685,8 @@
                     for (let suitNameWithEmoji in tarotMinorSuitDetails) { 
                         for (let rank of tarotRanks) {
                             const cardFullName = `${rank} of ${suitNameWithEmoji}`; 
-                            const meaning = minorArcanaMeanings[cardFullName] || "Key meanings vary";
-                            const reversedMeaning = minorArcanaReversedMeanings[cardFullName] || "Reversed interpretation";
+                            const meaning = minorArcanaMeanings[cardFullName] || "Meaning not available";
+                            const reversedMeaning = minorArcanaReversedMeanings[cardFullName] || "Reversed meaning not available";
                             currentDeck.push({ 
                                 name: cardFullName, 
                                 originalName: cardFullName,
@@ -578,8 +717,8 @@
                     for (let suitNameWithEmoji in tarotMinorSuitDetails) { 
                         for (let rank of tarotRanks) {
                             const cardFullName = `${rank} of ${suitNameWithEmoji}`;
-                            const meaning = minorArcanaMeanings[cardFullName] || "Key meanings vary";
-                            const reversedMeaning = minorArcanaReversedMeanings[cardFullName] || "Reversed interpretation";
+                            const meaning = minorArcanaMeanings[cardFullName] || "Meaning not available";
+                            const reversedMeaning = minorArcanaReversedMeanings[cardFullName] || "Reversed meaning not available";
                             currentDeck.push({ 
                                 name: cardFullName, 
                                 originalName: cardFullName,
@@ -600,7 +739,7 @@
                             name: cardData.thothName, 
                             originalName: cardData.name, 
                             meaning: cardData.meaning,
-                            number: cardData.name.split(" - ")[0], 
+                            number: cardData.number || cardData.name.split(" - ")[0], 
                             thothName: cardData.thothName, 
                             type: 'thoth_major', 
                             isReversed: false, 
@@ -612,7 +751,7 @@
                             const cardFullNameForLookup = `${rank} of ${suitName}`; 
                             const cardDisplayName = `${rank} of ${suitName}`; 
                             const subtitle = thothMinorArcanaSubtitles[cardFullNameForLookup] || "";
-                            const meaning = thothMinorArcanaMeanings[cardFullNameForLookup] || "Thoth meaning";
+                            const meaning = thothMinorArcanaMeanings[cardFullNameForLookup] || "Thoth interpretation"; 
                             currentDeck.push({
                                 name: cardDisplayName,
                                 originalName: cardDisplayName,
@@ -657,10 +796,10 @@
 
             if (card.type && card.type.includes('_reversals') && !card.type.startsWith('thoth_')) { 
                 card.isReversed = (Math.random() < 0.5);
-                card.meaning = card.isReversed ? (card.reversedMeaning || "Reversed interpretation") : card.meaning;
+                card.meaning = card.isReversed ? (card.reversedMeaning || "Reversed interpretation") : (card.meaning || "Upright interpretation");
             } else {
                  card.isReversed = false; 
-                 card.meaning = card.meaning || "Meaning not available"; 
+                 card.meaning = card.meaning || "Interpretation not available"; 
             }
             return card;
         }
