@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans Display', sans-serif; 
@@ -290,7 +292,9 @@
         const meaningFontSize = 16; 
         const reversedTextFontSize = 18; 
         const cornerXOffset = 36; 
-        const cardFontFamily = "'IM Fell English', serif"; 
+        const tarotCardFontFamily = "'IM Fell English', serif"; 
+        const playingCardFontFamily = "'Crimson Text', serif"; 
+        const jokerFontFamily = "'Rock Salt', cursive";
         const cardStrokeWidth = 2.5; 
         const playingCardFill = "#FAF9F6"; 
         const tarotCardFill = "#D2B48C"; 
@@ -305,11 +309,11 @@
             if (!suitInfo) return `<span>Error: Suit ${suitName} not found</span>`;
             let displayRank = rank || ''; 
             const yRankTop = rankFontSize + 7; 
-            const playingCardCornerSuitSize = 43; 
+            const playingCardCornerSuitSize = 40; 
             const ySuitTop = yRankTop + playingCardCornerSuitSize + 10; 
 
             return `
-                <svg width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family: ${cardFontFamily};">
+                <svg width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family: ${playingCardFontFamily};">
                     <defs>
                         <pattern id="linenPatternPlaying" patternUnits="userSpaceOnUse" width="7" height="7"> 
                             <rect width="7" height="7" fill="${playingCardFill}"/>
@@ -325,12 +329,12 @@
         }
 
         function generateJokerSVG() {
-            const jokerTextSize = 60; 
+            const jokerTextSize = 45; 
             const jokerEmojiSize = 82; 
-            const yJokerText = cardHeight/2 - 30; 
-            const yJokerEmoji = cardHeight/2 + 60; 
+            const yJokerText = cardHeight/2 - 25; 
+            const yJokerEmoji = cardHeight/2 + 55; 
             return `
-                <svg width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family: ${cardFontFamily};">
+                <svg width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}" xmlns="http://www.w3.org/2000/svg">
                      <defs>
                         <pattern id="linenPatternJoker" patternUnits="userSpaceOnUse" width="7" height="7">
                             <rect width="7" height="7" fill="${playingCardFill}"/>
@@ -339,7 +343,7 @@
                         </pattern>
                     </defs>
                     <rect x="1" y="1" width="${cardWidth - 2}" height="${cardHeight - 2}" rx="${cornerRadius}" ry="${cornerRadius}" fill="url(#linenPatternJoker)" stroke="#94a3b8" stroke-width="${cardStrokeWidth}"/>
-                    <text x="${cardWidth/2}" y="${yJokerText}" font-size="${jokerTextSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle">Joker</text> 
+                    <text x="${cardWidth/2}" y="${yJokerText}" font-size="${jokerTextSize}" font-style="italic" fill="${tarotTextColor}" text-anchor="middle" style="font-family: ${jokerFontFamily};">Joker</text> 
                     <text x="${cardWidth/2}" y="${yJokerEmoji}" font-size="${jokerEmojiSize}" text-anchor="middle" dominant-baseline="central">🃏</text> 
                 </svg>`;
         }
@@ -387,12 +391,12 @@
             let titleTextForWrapping = ""; 
             let emojisForRWS = cardData.emojis || ""; 
 
-            // Simplified for RWS-style Major Arcana as Thoth specific logic is removed
+            // Logic for RWS Major Arcana (Thoth specific logic is removed from here)
             const nameParts = originalCardName.split(" - ");
             numberForCenterDisplay = (nameParts.length > 0 ? nameParts[0] : "") || ""; 
             titleTextForWrapping = (nameParts.length > 1 ? nameParts[1] : originalCardName) || ""; 
             
-            const wrappedNameLines = wrapText(titleTextForWrapping, cardWidth - 70, majorArcanaTitleFontSize, cardFontFamily, false); 
+            const wrappedNameLines = wrapText(titleTextForWrapping, cardWidth - 70, majorArcanaTitleFontSize, tarotCardFontFamily, false); 
             
             let nameSVGtspans = '';
             const yNameStart = tarotTitleYStart; 
@@ -415,7 +419,7 @@
             }
 
             const meaningText = cardData.meaning || '';
-            const meaningLines = wrapText(meaningText, cardWidth - 50, meaningFontSize, cardFontFamily, true); 
+            const meaningLines = wrapText(meaningText, cardWidth - 50, meaningFontSize, tarotCardFontFamily, true); 
             let meaningTspans = ''; 
             const lineHeightMeaning = meaningFontSize * 1.2;
             let yMeaningTextStart = cardHeight - 24 - ((meaningLines.length -1) * lineHeightMeaning); 
@@ -428,7 +432,7 @@
             const randomSeed = Math.floor(Math.random() * 1000); 
 
             return `
-                <svg width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family: ${cardFontFamily};">
+                <svg width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family: ${tarotCardFontFamily};">
                     <defs>
                         <filter id="parchmentFilterMajor_${randomSeed}">
                             <feTurbulence type="fractalNoise" baseFrequency="0.015 0.025" numOctaves="2" seed="${randomSeed}" stitchTiles="stitch" result="turbulence"/>
@@ -455,14 +459,14 @@
                 </svg>`;
         }
         
-        function generateMinorArcanaSVG(rank, suitNameWithEmoji, meaning, isReversed, isThoth = false, subtitle = "") { // isThoth and subtitle are now effectively unused but kept for signature consistency if other decks were re-added
-            const currentSuitInfo = tarotMinorSuitDetails[suitNameWithEmoji]; // Assumes RWS style for minor arcana
+        function generateMinorArcanaSVG(rank, suitNameWithEmoji, meaning, isReversed, isThoth = false, subtitle = "") { // isThoth and subtitle are now effectively unused for RWS
+            const currentSuitInfo = tarotMinorSuitDetails[suitNameWithEmoji]; // Only RWS style
 
             if (!currentSuitInfo) return `<span>Error: Suit ${suitNameWithEmoji} not found</span>`;
             
             const baseTitleText = `${rank || ''} of ${currentSuitInfo.name || ''}`; 
             
-            const wrappedTitleLines = wrapText(baseTitleText, cardWidth - 70, minorArcanaCardNameFontSize, cardFontFamily, false); 
+            const wrappedTitleLines = wrapText(baseTitleText, cardWidth - 70, minorArcanaCardNameFontSize, tarotCardFontFamily, false); 
             
             let titleSVGtspans = '';
             // const yCardNameStart = minorArcanaCardNameFontSize + 18; 
@@ -481,7 +485,7 @@
             const yCenterEmoji = cardHeight / 2 + (centerSuitFontSize * 0.3); 
 
             const meaningText = meaning || '';
-            const meaningLines = wrapText(meaningText, cardWidth - 50, meaningFontSize, cardFontFamily, true); 
+            const meaningLines = wrapText(meaningText, cardWidth - 50, meaningFontSize, tarotCardFontFamily, true); 
             let meaningTspans = ''; 
             const lineHeightMeaning = meaningFontSize * 1.2;
             let yMeaningTextStart = cardHeight - 24 - ((meaningLines.length -1) * lineHeightMeaning); 
@@ -494,7 +498,7 @@
             const randomSeed = Math.floor(Math.random() * 1000);
 
             return `
-                <svg width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family: ${cardFontFamily};">
+                <svg width="${cardWidth}" height="${cardHeight}" viewBox="0 0 ${cardWidth} ${cardHeight}" xmlns="http://www.w3.org/2000/svg" style="font-family: ${tarotCardFontFamily};">
                     <defs>
                          <filter id="parchmentFilterMinor_${randomSeed}">
                             <feTurbulence type="fractalNoise" baseFrequency="0.015 0.025" numOctaves="2" seed="${randomSeed}" stitchTiles="stitch" result="turbulence"/> 
@@ -553,6 +557,7 @@
                     currentDeck.push({ name: 'Joker 🃏', originalName: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
                     currentDeck.push({ name: 'Joker 🃏', originalName: 'Joker 🃏', type: 'joker', svg: generateJokerSVG() });
                     break;
+                // Cartomancy case removed
                 case 'tarot_major': 
                     majorArcanaData.forEach(cardData => { 
                         currentDeck.push({ 
@@ -660,7 +665,7 @@
             const randomIndex = Math.floor(Math.random() * currentDeck.length);
             const card = { ...currentDeck[randomIndex] }; 
 
-            if (card.type && card.type.includes('_reversals')) { // This will now only apply to RWS reversal deck
+            if (card.type && card.type.includes('_reversals')) { 
                 card.isReversed = (Math.random() < 0.5);
                 card.meaning = card.isReversed ? (card.reversedMeaning || "Reversed interpretation") : (card.meaning || "Upright interpretation");
             } else {
@@ -676,10 +681,10 @@
             
             cardDisplayArea.innerHTML = ''; 
 
-            if (selectedCard.svgGenerator === 'major') { // Simplified as 'major_thoth' is removed
+            if (selectedCard.svgGenerator === 'major') { // Simplified, as 'major_thoth' is removed
                 cardDisplayArea.innerHTML = generateMajorArcanaSVG(selectedCard); 
-            } else if (selectedCard.svgGenerator === 'minor') { // Simplified as 'minor_thoth' is removed
-                cardDisplayArea.innerHTML = generateMinorArcanaSVG(selectedCard.rank, selectedCard.suit, selectedCard.meaning, selectedCard.isReversed, false, ""); // isThoth is false, subtitle is empty
+            } else if (selectedCard.svgGenerator === 'minor') { // Simplified, as 'minor_thoth' is removed
+                cardDisplayArea.innerHTML = generateMinorArcanaSVG(selectedCard.rank, selectedCard.suit, selectedCard.meaning, selectedCard.isReversed, false, ""); 
             } else if (selectedCard.svg) { 
                 cardDisplayArea.innerHTML = selectedCard.svg;
             } else { 
